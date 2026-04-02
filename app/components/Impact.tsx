@@ -1,9 +1,26 @@
 import React from "react";
 import { User, QrCode, ArrowRight, ShieldCheck, TrendingUp, CheckCircle2 } from "lucide-react";
 
-export default function Impact() {
+export default function Impact({ onStartAssessment }: { onStartAssessment?: () => void }) {
   return (
     <section id="method" className="w-full py-24 md:py-32 px-4 sm:px-6 md:px-12 flex flex-col items-center bg-background overflow-hidden relative">
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #cbd5e1 1.2px, transparent 1.2px)",
+          backgroundSize: "28px 28px",
+          opacity: 0.5,
+        }}
+      />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, var(--background, #ffffff) 100%)",
+        }}
+      />
       <div className="max-w-7xl w-full mx-auto">
 
         {/* Section Header */}
@@ -95,7 +112,7 @@ export default function Impact() {
 
               {/* Faux interactive list */}
               <div className="flex flex-col gap-2.5 w-full md:w-[220px] shrink-0 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                <button className="bg-[#2563EB] text-white text-[11px] font-bold px-4 py-3.5 rounded-xl text-left flex justify-between items-center shadow-md">
+                <button onClick={onStartAssessment} className="bg-[#2563EB] text-white text-[11px] font-bold px-4 py-3.5 rounded-xl text-left flex justify-between items-center shadow-md">
                   <span>ASSESSMENT</span>
                   <ShieldCheck className="w-4 h-4 text-white/80" />
                 </button>
@@ -110,9 +127,9 @@ export default function Impact() {
           {/* Card 4: Bottom Left Middle (Portrait) (Col 2, Row 2) */}
           <div className="md:col-span-1 lg:col-span-1 relative bg-[#0F172A] rounded-[32px] overflow-hidden group shadow-[0_4px_20px_rgb(0,0,0,0.08)]">
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
-              className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110 duration-[1.5s] origin-top"
-              alt="Professional using tool"
+              src="/1.png"
+              className="absolute inset-0 w-full h-full object-contain p-8 opacity-70"
+              alt="Career readiness visualization"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent p-6 flex flex-col justify-end">
               {/* Floating Faux Pill UI */}

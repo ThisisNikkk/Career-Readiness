@@ -1,12 +1,12 @@
 import React from "react";
 import { ClipboardCheck, BarChart3, Rocket, ArrowRight } from "lucide-react";
 
-export default function Journey() {
+export default function Journey({ onStartAssessment }: { onStartAssessment?: () => void }) {
   const steps = [
     {
       number: "01",
       title: "The Assessment",
-      description: "Complete a targeted 15-question diagnostic designed to pinpoint your exact career readiness state in under 3 minutes.",
+      description: "Complete a targeted 20-question diagnostic designed to pinpoint your exact career readiness state in under 3 minutes.",
       icon: <ClipboardCheck className="w-6 h-6 text-accent-blue" />,
     },
     {
@@ -24,12 +24,30 @@ export default function Journey() {
   ];
 
   return (
-    <section id="path" className="w-full py-24 md:py-32 px-6 md:px-16 flex flex-col items-center bg-slate-50 relative overflow-hidden">
+    <section id="path" className="w-full py-16 md:py-24 px-6 md:px-16 flex flex-col items-center bg-slate-50 relative overflow-hidden">
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #cbd5e1 1.2px, transparent 1.2px)",
+          backgroundSize: "28px 28px",
+          opacity: 0.5,
+        }}
+      />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, #f8fafc 100%)",
+        }}
+      />
+
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-blue/5 blur-[120px] rounded-full -mr-64 -mt-64" />
 
       {/* Section Header */}
-      <div className="max-w-4xl w-full text-center mb-16 md:mb-24 relative z-10 px-4">
+      <div className="max-w-4xl w-full text-center mb-16 md:mb-12 relative z-10 px-4">
         <div className="inline-flex bg-white text-accent-blue text-[10px] tracking-[0.2em] font-bold px-4 py-2 rounded-full mb-6 uppercase shadow-sm">
           The Roadmap
         </div>
@@ -55,7 +73,7 @@ export default function Journey() {
               <div className="w-16 h-16 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center shrink-0 shadow-lg group-hover:border-accent-blue group-hover:shadow-accent-blue/20 transition-all duration-300">
                 {step.icon}
               </div>
-              <div className="text-6xl font-black text-slate-100 group-hover:text-accent-blue/10 transition-colors duration-500 select-none">
+              <div className="text-6xl font-black text-slate-100 group-hover:text-accent-blue transition-colors duration-500 select-none opacity-40 group-hover:opacity-100">
                 {step.number}
               </div>
             </div>

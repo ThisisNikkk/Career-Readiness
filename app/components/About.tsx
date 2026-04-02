@@ -1,44 +1,127 @@
 import React from "react";
-import { Check, Target, Compass, Zap, ShieldCheck, Share2 } from "lucide-react";
+import Image from "next/image";
+import { Target, Zap, Compass, ShieldCheck, Share2, ArrowUpRight } from "lucide-react";
 
-export default function About() {
-  const dimensions = [
-    {
-      title: "Clarity",
-      icon: <Target className="w-5 h-5 text-accent-blue" strokeWidth={3} />,
-      description: "How clear you are on your career direction and long-term goals.",
-      gridArea: "lg:col-span-4 lg:row-span-1",
-    },
-    {
-      title: "Ownership",
-      icon: <Zap className="w-5 h-5 text-accent-blue" strokeWidth={3} />,
-      description: "How much you take control, create options, and follow through.",
-      gridArea: "lg:col-span-4 lg:row-span-1",
-    },
-    {
-      title: "Curiosity",
-      icon: <Compass className="w-5 h-5 text-accent-blue" strokeWidth={3} />,
-      description: "How actively you seek new information and explore possibilities.",
-      gridArea: "lg:col-span-4 lg:row-span-1",
-    },
-    {
-      title: "Confidence",
-      icon: <ShieldCheck className="w-5 h-5 text-accent-blue" strokeWidth={3} />,
-      description: "How resilient you feel and your comfort in owning your value.",
-      gridArea: "lg:col-span-3 lg:row-span-1",
-    },
-    {
-      title: "Network & Visibility",
-      icon: <Share2 className="w-5 h-5 text-accent-blue" strokeWidth={3} />,
-      description: "How well you build relationships and showcase your impact.",
-      gridArea: "lg:col-span-5 lg:row-span-1",
-    },
-  ];
+const dimensions = [
+  {
+    id: "clarity",
+    title: "Clarity",
+    tagline: "Know your north star",
+    description: "How clear you are on your career direction and long-term goals.",
+    icon: <Target className="w-7 h-7" />,
+    image: "/4.png",
+  },
+  {
+    id: "ownership",
+    title: "Ownership",
+    tagline: "Drive your own story",
+    description: "How much you take control, create options, and follow through.",
+    icon: <Zap className="w-7 h-7" />,
+    image: "/2.png",
+  },
+  {
+    id: "curiosity",
+    title: "Curiosity",
+    tagline: "Stay hungry, explore",
+    description: "How actively you seek new information and explore possibilities.",
+    icon: <Compass className="w-7 h-7" />,
+    image: "/5.png",
+  },
+  {
+    id: "confidence",
+    title: "Confidence",
+    tagline: "Own your worth",
+    description: "How resilient you feel and your comfort in owning your value.",
+    icon: <ShieldCheck className="w-7 h-7" />,
+    image: "/1.png",
+  },
+  {
+    id: "network",
+    title: "Network & Visibility",
+    tagline: "Build your orbit",
+    description: "How well you build relationships and showcase your impact.",
+    icon: <Share2 className="w-7 h-7" />,
+    image: "/3.png",
+  },
+];
 
+function BentoCard({ dimension }: { dimension: (typeof dimensions)[number] }) {
   return (
-    <section id="about" className="w-full py-24 md:py-32 px-6 md:px-16 flex flex-col items-center bg-background overflow-hidden relative">
-      {/* Section Header */}
-      <div className="max-w-4xl w-full text-center mb-16 md:mb-24">
+    <div
+      className="group bg-white border border-slate-100 rounded-[28px] overflow-hidden flex flex-col
+                 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer"
+      style={{ boxShadow: "0 2px 12px 0 rgba(0,0,0,0.04)" }}
+    >
+      {/* Illustration Container */}
+      <div className="w-full bg-slate-50 flex items-center justify-center relative overflow-hidden group/img" style={{ height: 220 }}>
+        {dimension.image ? (
+          <div className="relative w-full h-full p-6 transition-transform duration-500 group-hover:scale-105">
+            <Image
+              src={dimension.image}
+              alt={dimension.title}
+              fill
+              className="object-contain p-2"
+              priority={dimension.id === "clarity"}
+            />
+          </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-50/50">
+            <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center text-slate-200 shadow-sm">
+              {dimension.icon}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Divider */}
+      <div className="h-px bg-slate-100 mx-6" />
+
+      {/* Text content */}
+      <div className="flex flex-col gap-2.5 px-6 py-5 flex-1">
+
+        <div className="flex items-center gap-2">
+          <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-accent-blue">
+            {dimension.icon}
+          </div>
+          <h3 className="text-[20px] font-bold text-primary leading-tight tracking-tight">
+            {dimension.title}
+          </h3>
+        </div>
+
+        <p className="text-[15px] text-slate-400 leading-relaxed font-medium">
+          {dimension.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function About({ onStartAssessment }: { onStartAssessment?: () => void }) {
+  return (
+    <section
+      id="about"
+      className="w-full py-16 md:py-24 px-6 md:px-12 flex flex-col items-center bg-background overflow-hidden relative"
+    >
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #cbd5e1 1.2px, transparent 1.2px)",
+          backgroundSize: "28px 28px",
+          opacity: 0.5,
+        }}
+      />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, var(--background, #ffffff) 100%)",
+        }}
+      />
+
+      {/* Header — untouched */}
+      <div className="max-w-4xl w-full text-center mb-16 md:mb-24 relative z-10">
         <div className="inline-flex bg-slate-100 text-accent-blue text-[10px] tracking-[0.2em] font-bold px-4 py-2 rounded-full mb-6 uppercase">
           What We Measure
         </div>
@@ -50,73 +133,48 @@ export default function About() {
         </p>
       </div>
 
-      {/* Asymmetric Bento Grid - Anchored Around Image */}
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-auto">
+      {/* Bento Grid */}
+      <div className="max-w-8xl w-full mx-auto relative z-10">
 
-        {/* Left Column Area (Upper) */}
-        <div className="col-span-12 lg:col-span-4 flex flex-col gap-6">
-          <BentoCard dimension={dimensions[0]} className="flex-1" />
-          <BentoCard dimension={dimensions[2]} className="flex-1" />
+        {/* Desktop: 5-col */}
+        <div className="hidden xl:grid xl:grid-cols-5 gap-5">
+          {dimensions.map((dim) => (
+            <BentoCard key={dim.id} dimension={dim} />
+          ))}
         </div>
 
-        {/* Center Main Image (Vertical Pivot) */}
-        <div className="col-span-12 lg:col-span-4 h-full min-h-[400px] lg:min-h-0 bg-white border-2 border-slate-50 rounded-[48px] overflow-hidden shadow-2xl relative order-first lg:order-none">
-          <img
-            src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=800"
-            alt="Professional Excellence"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-          />
+        {/* Tablet: 3 + 2 */}
+        <div className="hidden md:flex xl:hidden flex-col gap-5">
+          <div className="grid grid-cols-3 gap-5">
+            {dimensions.slice(0, 3).map((dim) => (
+              <BentoCard key={dim.id} dimension={dim} />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-5 max-w-2xl mx-auto w-full">
+            {dimensions.slice(3).map((dim) => (
+              <BentoCard key={dim.id} dimension={dim} />
+            ))}
+          </div>
         </div>
 
-        {/* Right Column Area (Upper) */}
-        <div className="col-span-12 lg:col-span-4 flex flex-col gap-6">
-          <BentoCard dimension={dimensions[1]} className="flex-1" />
-          <BentoCard dimension={dimensions[3]} className="flex-1" />
+        {/* Mobile: 1-col */}
+        <div className="grid md:hidden grid-cols-1 gap-4">
+          {dimensions.map((dim) => (
+            <BentoCard key={dim.id} dimension={dim} />
+          ))}
         </div>
 
-        {/* Bottom Full-Width Or Large Wide Card */}
-        <div className="col-span-12 flex justify-center">
-          <BentoCard
-            dimension={dimensions[4]}
-            className="lg:max-w-4xl w-full flex-col sm:flex-row items-start sm:items-center text-left sm:min-h-[188px] sm:py-12"
-          />
-        </div>
+      </div>
 
+      {/* CTA */}
+      <div className="mt-16 flex flex-col sm:flex-row items-center gap-3 relative z-10">
+        <button onClick={onStartAssessment} className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-secondary hover:from-secondary hover:to-accent-blue text-white rounded-full pl-6 pr-2 py-2 transition-all duration-300 group shadow-lg hover:shadow-accent-blue/20">
+          <span className="text-sm font-medium tracking-wide translate-x-1">TAKE THE FREE ASSESSMENT</span>
+          <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+            <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+          </div>
+        </button>
       </div>
     </section>
-  );
-}
-
-interface BentoCardProps {
-  dimension: {
-    title: string;
-    icon: React.ReactNode;
-    description: string;
-  };
-  className?: string;
-}
-
-function BentoCard({ dimension, className = "" }: BentoCardProps) {
-  return (
-    <div
-      className={`bg-white border border-slate-100 p-8 rounded-[32px] flex flex-col items-start gap-5 shadow-sm hover:shadow-md transition-all group cursor ${className}`}
-    >
-      {/* Icon */}
-      <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
-        <div className="text-accent-blue">
-          {dimension.icon}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div>
-        <h3 className="text-xl font-bold text-primary mb-2 hover:text-accent-blue transition-colors leading-tight">
-          {dimension.title}
-        </h3>
-        <p className="text-sm text-slate-500 leading-relaxed font-medium">
-          {dimension.description}
-        </p>
-      </div>
-    </div>
   );
 }

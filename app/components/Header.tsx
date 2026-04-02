@@ -23,7 +23,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
             e.preventDefault();
             document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="text-sm font-medium text-gray-600 hover:text-accent-blue transition-colors"
+          className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
         >
           About
         </a>
@@ -33,7 +33,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
             e.preventDefault();
             document.getElementById('path')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="text-sm font-medium text-gray-600 hover:text-accent-blue transition-colors"
+          className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
         >
           Path
         </a>
@@ -43,7 +43,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
             e.preventDefault();
             document.getElementById('method')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="text-sm font-medium text-gray-600 hover:text-accent-blue transition-colors"
+          className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
         >
           Method
         </a>
@@ -53,7 +53,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
             e.preventDefault();
             document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="text-sm font-medium text-gray-600 hover:text-accent-blue transition-colors"
+          className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
         >
           FAQ
         </a>

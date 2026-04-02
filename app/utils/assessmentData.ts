@@ -32,36 +32,45 @@ export interface AssessmentResult {
 // ─── Question Bank ────────────────────────────────────────────────────────────
 
 export const questions: Question[] = [
-  // Clarity (q1–q3)
+  // Clarity
   { id: 1, dimension: "clarity", text: "I can describe the kind of work I want to be doing in the next 3 years in one clear sentence." },
   { id: 2, dimension: "clarity", text: "I know which skills I must build in the next 12 months to reach my next role." },
-  { id: 3, dimension: "clarity", text: "I regularly review my career direction instead of just seeing what happens." },
-  // Ownership (q4–q6)
-  { id: 4, dimension: "ownership", text: "In the last 90 days, I've taken a specific action (course, project, application) to move my career forward." },
-  { id: 5, dimension: "ownership", text: "If I feel stuck at work, I create options instead of waiting for my manager or company to fix it." },
-  { id: 6, dimension: "ownership", text: "I track my achievements so I can clearly show my impact." },
-  // Curiosity (q7–q9)
-  { id: 7, dimension: "curiosity", text: "I consistently seek out new information about my industry or roles I'm interested in." },
-  { id: 8, dimension: "curiosity", text: "I talk to people in roles I aspire to, even if it feels uncomfortable at first." },
-  { id: 9, dimension: "curiosity", text: "I treat my career like an experiment and regularly try small tests (side projects, stretch tasks, etc.)." },
-  // Confidence (q10–q12)
-  { id: 10, dimension: "confidence", text: "I believe my skills will stay valuable even if my current role disappeared tomorrow." },
-  { id: 11, dimension: "confidence", text: "Rejection (e.g., from an application or promotion) motivates me to adjust and try again." },
-  { id: 12, dimension: "confidence", text: "I feel comfortable asking for promotions, raises, or new opportunities when I'm ready." },
-  // Network & Visibility (q13–q15)
-  { id: 13, dimension: "network", text: "I have at least 3–5 people I could message today for advice or referrals related to my next move." },
-  { id: 14, dimension: "network", text: "My online presence (e.g., LinkedIn, portfolio, social) clearly reflects the kind of roles I want." },
-  { id: 15, dimension: "network", text: "I intentionally add value to my network (sharing insights, connections, support), not just ask for help." },
+  { id: 3, dimension: "clarity", text: "I regularly review my career direction instead of just 'seeing what happens'." },
+  { id: 4, dimension: "clarity", text: "In the past 30 days, I have spent at least one hour actively mapping out my career trajectory." }, // Behavioral Receipt
+
+  // Ownership
+  { id: 5, dimension: "ownership", text: "In the last 90 days, I've taken a specific action (course, project, application) to move my career forward." },
+  { id: 6, dimension: "ownership", text: "If I feel stuck at work, I create options instead of waiting for my manager or company to fix it." },
+  { id: 7, dimension: "ownership", text: "I track my achievements so I can clearly show my impact." },
+  { id: 8, dimension: "ownership", text: "In the past 30 days, I have proactively asked for feedback to improve my performance." }, // Behavioral Receipt
+
+  // Curiosity
+  { id: 9, dimension: "curiosity", text: "I consistently seek out new information about my industry or roles I'm interested in." },
+  { id: 10, dimension: "curiosity", text: "I talk to people in roles I aspire to, even if it feels uncomfortable at first." },
+  { id: 11, dimension: "curiosity", text: "I treat my career like an experiment and regularly try small tests (side projects, stretch tasks, etc.)." },
+  { id: 12, dimension: "curiosity", text: "In the past 30 days, I have read an article, book, or attended a seminar outside of my immediate job requirements." }, // Behavioral Receipt
+
+  // Confidence
+  { id: 13, dimension: "confidence", text: "I believe my skills will stay valuable even if my current role disappeared tomorrow." },
+  { id: 14, dimension: "confidence", text: "Rejection (e.g., from an application or promotion) motivates me to adjust and try again." },
+  { id: 15, dimension: "confidence", text: "I feel comfortable asking for promotions, raises, or new opportunities when I'm ready." },
+  { id: 16, dimension: "confidence", text: "In the past 30 days, I have confidently voiced an unpopular opinion or new idea in a professional setting." }, // Behavioral Receipt
+
+  // Network & Visibility
+  { id: 17, dimension: "network", text: "I have at least 3–5 people I could message today for advice or referrals related to my next move." },
+  { id: 18, dimension: "network", text: "My online presence (e.g., LinkedIn, portfolio, social) clearly reflects the kind of roles I want." },
+  { id: 19, dimension: "network", text: "I intentionally add value to my network (sharing insights, connections, support), not just ask for help." },
+  { id: 20, dimension: "network", text: "In the past 30 days, I have initiated contact with someone solely to build or maintain a professional relationship." }, // Behavioral Receipt
 ];
 
 // ─── Labels & Weights ─────────────────────────────────────────────────────────
 
 export const dimensionMeta: Record<Dimension, { label: string; weight: number }> = {
-  clarity:    { label: "Clarity",             weight: 1.2 },
-  ownership:  { label: "Ownership",           weight: 1.2 },
-  curiosity:  { label: "Curiosity",           weight: 1.0 },
-  confidence: { label: "Confidence",          weight: 1.0 },
-  network:    { label: "Network & Visibility", weight: 1.0 },
+  clarity: { label: "Clarity", weight: 1.2 },
+  ownership: { label: "Ownership", weight: 1.2 },
+  curiosity: { label: "Curiosity", weight: 1.0 },
+  confidence: { label: "Confidence", weight: 1.0 },
+  network: { label: "Network & Visibility", weight: 1.0 },
 };
 
 export const DIMENSION_ORDER: Dimension[] = ["clarity", "ownership", "curiosity", "confidence", "network"];
@@ -83,9 +92,9 @@ function getOverallBand(score: number): Band {
 }
 
 const bandLabels: Record<Band, string> = {
-  low:    "Coasting",
+  low: "Coasting",
   medium: "Climbing",
-  high:   "Ready to Leap",
+  high: "Ready to Leap",
 };
 
 // ─── Insights ─────────────────────────────────────────────────────────────────

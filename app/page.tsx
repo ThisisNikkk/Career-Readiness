@@ -43,9 +43,9 @@ export default function Home() {
     <main className="relative min-h-screen bg-background">
       <Header onStartAssessment={() => setMode("assessment")} />
       <Hero onStartAssessment={() => setMode("assessment")} />
-      <About />
-      <Journey />
-      <Impact />
+      <About onStartAssessment={() => setMode("assessment")} />
+      <Journey onStartAssessment={() => setMode("assessment")} />
+      {/* <Impact onStartAssessment={() => setMode("assessment")} /> */}
       <FAQ />
       <FinalCTA onStartAssessment={() => setMode("assessment")} />
       <Footer onStartAssessment={() => setMode("assessment")} />
