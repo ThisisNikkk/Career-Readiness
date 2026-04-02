@@ -18,6 +18,16 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
       {/* Navigation */}
       <nav className="hidden md:flex items-center gap-8">
         <a
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
+        >
+          Home
+        </a>
+        <a
           href="#about"
           onClick={(e) => {
             e.preventDefault();
@@ -37,7 +47,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
         >
           Path
         </a>
-        <a
+        {/* <a
           href="#method"
           onClick={(e) => {
             e.preventDefault();
@@ -46,7 +56,7 @@ export default function Header({ onStartAssessment }: { onStartAssessment?: () =
           className="text-md font-medium text-gray-600 hover:text-accent-blue transition-colors"
         >
           Method
-        </a>
+        </a> */}
         <a
           href="#faq"
           onClick={(e) => {

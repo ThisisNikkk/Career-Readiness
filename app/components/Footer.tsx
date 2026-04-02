@@ -64,10 +64,10 @@ export default function Footer({ onStartAssessment }: { onStartAssessment?: () =
             <img src="/logo.png" alt="Tita Gray Logo" className="h-32 w-auto" />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            <FooterLink label="Assessment" href="#" onClick={onStartAssessment} />
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+            <FooterLink label="Home" href="#home" />
+            <FooterLink label="About" href="#about" />
             <FooterLink label="Path" href="#path" />
-            <FooterLink label="Method" href="#method" />
             <FooterLink label="FAQ" href="#faq" />
           </div>
 

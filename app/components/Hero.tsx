@@ -3,7 +3,7 @@ import { ArrowUpRight, BarChart3, CheckCircle2, ShieldCheck } from "lucide-react
 
 export default function Hero({ onStartAssessment }: { onStartAssessment?: () => void }) {
   return (
-    <section className="w-full min-h-screen pt-32 pb-16 px-6 md:px-16 flex flex-col justify-center relative overflow-hidden">
+    <section id="home" className="w-full min-h-screen pt-32 pb-16 px-6 md:px-16 flex flex-col justify-center relative overflow-hidden">
       {/* Dot grid */}
       <div
         className="absolute inset-0 pointer-events-none"
