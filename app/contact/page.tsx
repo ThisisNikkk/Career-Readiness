@@ -55,7 +55,7 @@ export default function ContactPage() {
       </div>
 
       <div className="relative z-15">
-        <Header onStartAssessment={startAssessment} />
+        <Header />
       </div>
 
       <section className="relative z-10 pt-32 pb-20 px-6 md:px-16 max-w-7xl mx-auto">
@@ -220,7 +220,7 @@ export default function ContactPage() {
       </section>
 
       <div className="relative z-10">
-        <Footer onStartAssessment={startAssessment} />
+        <Footer />
       </div>
     </main>
   );
