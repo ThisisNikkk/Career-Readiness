@@ -1,7 +1,9 @@
 import React from "react";
+import Image from "next/image";
 import { ArrowUpRight, BarChart3, CheckCircle2, ShieldCheck } from "lucide-react";
+import StartAssessmentButton from "./StartAssessmentButton";
 
-export default function Hero({ onStartAssessment }: { onStartAssessment?: () => void }) {
+export default function Hero() {
   return (
     <section id="home" className="w-full min-h-screen pt-32 pb-16 px-6 md:px-16 flex flex-col justify-center relative overflow-hidden">
       {/* Dot grid */}
@@ -45,23 +47,23 @@ export default function Hero({ onStartAssessment }: { onStartAssessment?: () => 
               Answer 20 quick questions to reveal if you&apos;re coasting, climbing, or ready to leap. Find out where you stand and get your personalized action plan.
             </p>
 
-            <button onClick={onStartAssessment} className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-secondary hover:from-secondary hover:to-accent-blue text-white rounded-full pl-6 pr-2 py-2 transition-all duration-300 group shadow-lg hover:shadow-accent-blue/20">
-              <span className="text-sm font-medium tracking-wide">TAKE ASSESSMENT</span>
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-              </div>
-            </button>
+            <StartAssessmentButton />
           </div>
 
           {/* Right Column - Image & Floating Cards */}
           <div className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center mt-8 lg:mt-0">
             {/* Image Container */}
             <div className="w-[85%] h-[90%] relative rounded-[32px] overflow-hidden shadow-2xl bg-white border border-slate-100 flex items-center justify-center">
-              <img
-                src="/6.png"
-                alt="Frustrated professional at computer"
-                className="w-full h-full object-contain p-8"
-              />
+              <div className="relative w-full h-full p-8">
+                <Image
+                  src="/6.png"
+                  alt="Frustrated professional at computer"
+                  fill
+                  className="object-contain p-8 animate-float"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
               {/* Soft gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
             </div>
@@ -70,8 +72,14 @@ export default function Hero({ onStartAssessment }: { onStartAssessment?: () => 
             <div className="absolute top-10 -right-4 sm:-right-8 bg-accent-blue/90 backdrop-blur-md p-4 rounded-2xl shadow-xl flex items-center gap-4 text-white hover:-translate-y-1 transition-transform animate-float">
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-accent-blue bg-white overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="avatar" />
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-accent-blue bg-white overflow-hidden relative">
+                    <Image 
+                      src={`https://i.pravatar.cc/100?img=${i + 10}`} 
+                      alt="avatar" 
+                      fill
+                      className="object-cover"
+                      sizes="32px"
+                    />
                   </div>
                 ))}
                 <div className="w-8 h-8 rounded-full border-2 border-accent-blue bg-white flex items-center justify-center text-accent-blue text-xs font-bold shadow-inner">

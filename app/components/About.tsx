@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Target, Zap, Compass, ShieldCheck, Share2, ArrowUpRight } from "lucide-react";
+import StartAssessmentButton from "./StartAssessmentButton";
 
 const dimensions = [
   {
@@ -62,6 +63,7 @@ function BentoCard({ dimension }: { dimension: (typeof dimensions)[number] }) {
               fill
               className="object-contain p-2"
               priority={dimension.id === "clarity"}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
             />
           </div>
         ) : (
@@ -96,7 +98,7 @@ function BentoCard({ dimension }: { dimension: (typeof dimensions)[number] }) {
   );
 }
 
-export default function About({ onStartAssessment }: { onStartAssessment?: () => void }) {
+export default function About() {
   return (
     <section
       id="about"
@@ -168,12 +170,9 @@ export default function About({ onStartAssessment }: { onStartAssessment?: () =>
 
       {/* CTA */}
       <div className="mt-16 flex flex-col sm:flex-row items-center gap-3 relative z-10">
-        <button onClick={onStartAssessment} className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-secondary hover:from-secondary hover:to-accent-blue text-white rounded-full pl-6 pr-2 py-2 transition-all duration-300 group shadow-lg hover:shadow-accent-blue/20">
-          <span className="text-sm font-medium tracking-wide translate-x-1">TAKE THE FREE ASSESSMENT</span>
-          <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-            <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-          </div>
-        </button>
+        <StartAssessmentButton>
+          TAKE THE FREE ASSESSMENT
+        </StartAssessmentButton>
       </div>
     </section>
   );

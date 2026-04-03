@@ -149,8 +149,9 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
               {isGenerating ? <span className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />}
               {isGenerating ? "Processing..." : "Save Report"}
             </button>
-            <button onClick={onRetake} className="hidden sm:flex items-center gap-2 text-[11px] font-black tracking-widest uppercase text-accent-blue hover:text-blue-700 transition-colors bg-blue-50 px-5 py-2.5 rounded-full border border-blue-100">
-              <RotateCcw className="w-3.5 h-3.5" /> Retake
+            <button onClick={onRetake} className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-black tracking-widest uppercase text-accent-blue hover:text-blue-700 transition-colors bg-blue-50 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border border-blue-100 shadow-sm shadow-blue-500/5 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+              <RotateCcw className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> 
+              <span>Retake</span>
             </button>
           </div>
         </div>

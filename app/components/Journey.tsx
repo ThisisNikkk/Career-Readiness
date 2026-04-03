@@ -1,7 +1,7 @@
 import React from "react";
 import { ClipboardCheck, BarChart3, Rocket, ArrowRight } from "lucide-react";
 
-export default function Journey({ onStartAssessment }: { onStartAssessment?: () => void }) {
+export default function Journey() {
   const steps = [
     {
       number: "01",

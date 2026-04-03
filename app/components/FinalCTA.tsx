@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import { ArrowRight, Sparkles, Zap, Target, BarChart3 } from "lucide-react";
+import StartAssessmentButton from "./StartAssessmentButton";
 
-export default function FinalCTA({ onStartAssessment }: { onStartAssessment?: () => void }) {
+export default function FinalCTA() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -170,19 +173,9 @@ export default function FinalCTA({ onStartAssessment }: { onStartAssessment?: ()
             className="flex flex-col sm:flex-row items-center justify-center gap-5"
             style={{ animation: "fade-in-up 0.5s 0.4s ease both" }}
           >
-            <button
-              onClick={onStartAssessment}
-              className="relative group flex items-center gap-3 font-bold text-white px-10 py-5 rounded-full text-base overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
-              style={{
-                background: "linear-gradient(135deg, #2563EB, #3B82F6)",
-                boxShadow: "0 0 0 1px rgba(255,255,255,0.1), 0 8px 32px rgba(59,130,246,0.45)",
-              }}
-            >
-              <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
-                style={{ background: "linear-gradient(135deg, #3B82F6, #60A5FA)" }} />
-              <span className="relative">Start Assessment Now</span>
-              <ArrowRight className="w-5 h-5 relative transition-transform duration-200 group-hover:translate-x-1" strokeWidth={3} />
-            </button>
+            <StartAssessmentButton className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-secondary hover:from-secondary hover:to-accent-blue text-white rounded-full pl-6 pr-2 py-2 transition-all duration-300 group shadow-lg hover:shadow-accent-blue/20">
+              <span className="text-sm font-medium tracking-wide ml-1 uppercase">Start Assessment Now</span>
+            </StartAssessmentButton>
 
             <div className="flex items-center gap-2.5">
               <div className="relative w-2 h-2">
