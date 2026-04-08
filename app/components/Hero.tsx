@@ -60,7 +60,7 @@ export default function Hero() {
               <div className="absolute inset-0 bg-accent-sky/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-[72px] font-semibold leading-[1.05] tracking-tight text-primary mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-semibold leading-[1.05] tracking-tight text-primary mb-6">
               Are You Secretly
               <br />
               <span className="text-primary-deep">Underplaying Your</span>
@@ -77,33 +77,33 @@ export default function Hero() {
         </div>
 
         {/* Stats Divider Bottom */}
-        <div className="mt-12 lg:mt-12 w-full bg-slate-50/50 border border-slate-100 rounded-[40px] px-8 py-10 backdrop-blur-sm">
-          <div className="flex flex-wrap justify-between items-center gap-8 md:gap-4 max-w-5xl mx-auto">
+        <div className="mt-12 lg:mt-12 w-full bg-slate-50/50 border border-slate-100 rounded-[32px] md:rounded-[40px] px-6 py-8 md:px-8 md:py-10 backdrop-blur-sm">
+          <div className="grid grid-cols-2 gap-y-8 gap-x-4 md:flex md:flex-wrap md:justify-between md:items-center md:gap-4 max-w-5xl mx-auto">
 
             <div className="flex flex-col items-center justify-center text-center flex-1 min-w-[120px]">
-              <div className="text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">100%</div>
-              <div className="text-sm font-medium text-slate-500">Privacy Guaranteed</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">100%</div>
+              <div className="text-xs sm:text-sm font-medium text-slate-500">Privacy Guaranteed</div>
             </div>
 
             <div className="hidden md:block w-px h-12 bg-slate-200" />
 
             <div className="flex flex-col items-center justify-center text-center flex-1 min-w-[120px]">
-              <div className="text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">25</div>
-              <div className="text-sm font-medium text-primary/60">Quick Questions</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">25</div>
+              <div className="text-xs sm:text-sm font-medium text-primary/60">Quick Questions</div>
             </div>
 
             <div className="hidden md:block w-px h-12 bg-slate-200" />
 
             <div className="flex flex-col items-center justify-center text-center flex-1 min-w-[120px]">
-              <div className="text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">5</div>
-              <div className="text-sm font-medium text-primary/60">Key Dimensions</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">5</div>
+              <div className="text-xs sm:text-sm font-medium text-primary/60">Key Dimensions</div>
             </div>
 
             <div className="hidden md:block w-px h-12 bg-slate-200" />
 
             <div className="flex flex-col items-center justify-center text-center flex-1 min-w-[120px]">
-              <div className="text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">1</div>
-              <div className="text-sm font-medium text-primary/60">Clear Action Plan</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-primary mb-2 tracking-tight">1</div>
+              <div className="text-xs sm:text-sm font-medium text-primary/60">Action Plan</div>
             </div>
 
           </div>

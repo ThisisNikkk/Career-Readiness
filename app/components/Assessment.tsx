@@ -149,6 +149,11 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
 
   // Robust fix for the retake flow landing on the calculating screen
   React.useEffect(() => {
+    // Clear any existing results to enforce a fresh completion for access to results/checkout
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("career_assessment_result");
+    }
+    
     setStep("onboarding");
     setOnboarding({ role: null, goal: null });
     setCurrentQ(0);
@@ -182,7 +187,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
           localStorage.setItem("career_assessment_result", JSON.stringify(res));
         }
         setTimeout(() => {
-          router.push("/result");
+          router.push("/checkout");
         }, 2800);
       }
     }, 350);
@@ -227,7 +232,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
 
       <div className="relative z-10 flex-1 grid lg:grid-cols-2 h-full overflow-hidden">
         <div className="flex flex-col bg-white/40 backdrop-blur-sm border-r border-slate-100">
-          <div className="w-full px-6 md:px-12 pt-10 pb-4 flex items-center justify-between">
+          <div className="w-full px-4 sm:px-8 md:px-12 pt-6 sm:pt-10 pb-4 flex items-center justify-between">
             <button
               onClick={handleExit}
               className="group flex items-center gap-2.5 text-slate-400 hover:text-primary transition-all font-bold text-xs tracking-widest uppercase bg-white/50 px-5 py-2.5 rounded-full border border-slate-100 hover:border-slate-200 shadow-sm"
@@ -245,8 +250,8 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
             )}
           </div>
 
-          <div className="flex-1 px-6 md:px-12 py-6 flex flex-col justify-center overflow-hidden">
-            <div className="max-w-xl w-full mx-auto -mt-16">
+          <div className="flex-1 px-4 sm:px-8 md:px-12 py-6 flex flex-col justify-center overflow-hidden">
+            <div className="max-w-xl w-full mx-auto lg:-mt-16">
               {step === "onboarding" ? (
                 <OnboardingFlow
                   data={onboarding}
@@ -280,6 +285,9 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
         @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
         .animate-float { animation: float 6s ease-in-out infinite; }
         .animate-fade-in-up { animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
       `}} />
 
       {showPreModal && (

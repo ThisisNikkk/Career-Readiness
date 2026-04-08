@@ -24,7 +24,7 @@ export default function PreAssessmentModal({ onStart, onClose }: PreAssessmentMo
         <div className="h-2 w-full bg-gradient-to-r from-accent-blue via-indigo-500 to-accent-blue" />
 
         {/* Header content */}
-        <div className="px-8 pt-10 pb-6 text-center">
+        <div className="px-5 sm:px-8 pt-8 sm:pt-10 pb-6 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-4">
             <Sparkles className="w-3.5 h-3.5 text-accent-blue" />
             <span className="text-[10px] font-black text-accent-blue tracking-[0.2em] uppercase">Before You Start</span>
@@ -38,7 +38,7 @@ export default function PreAssessmentModal({ onStart, onClose }: PreAssessmentMo
         </div>
 
         {/* Scrollable Body */}
-        <div className="flex-1 overflow-y-auto px-8 pb-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto px-5 sm:px-8 pb-8 custom-scrollbar">
           <div className="grid gap-6">
 
             {/* Instruction Card 1: Likert Scale */}
@@ -97,11 +97,11 @@ export default function PreAssessmentModal({ onStart, onClose }: PreAssessmentMo
                       return (
                         <div key={val} className="flex items-start gap-3">
                           <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm shrink-0 border-2
-                            ${val === 1 ? 'border-red-100 bg-red-50 text-red-500' : 
-                              val === 2 ? 'border-orange-100 bg-orange-50 text-orange-500' : 
-                              val === 3 ? 'border-slate-100 bg-slate-50 text-slate-500' : 
-                              val === 4 ? 'border-blue-100 bg-blue-50 text-blue-500' : 
-                              'border-emerald-100 bg-emerald-50 text-emerald-500'}`}>
+                            ${val === 1 ? 'border-red-100 bg-red-50 text-red-500' :
+                              val === 2 ? 'border-orange-100 bg-orange-50 text-orange-500' :
+                                val === 3 ? 'border-slate-100 bg-slate-50 text-slate-500' :
+                                  val === 4 ? 'border-blue-100 bg-blue-50 text-blue-500' :
+                                    'border-emerald-100 bg-emerald-50 text-emerald-500'}`}>
                             {val}
                           </div>
                           <div className="flex flex-col gap-0.5">
@@ -154,7 +154,7 @@ export default function PreAssessmentModal({ onStart, onClose }: PreAssessmentMo
         </div>
 
         {/* Footer Actions */}
-        <div className="px-8 py-8 border-t border-slate-50 bg-slate-50/20 flex flex-col gap-3">
+        <div className="px-5 sm:px-8 py-6 sm:py-8 border-t border-slate-50 bg-slate-50/20 flex flex-col gap-3">
           <button
             onClick={onStart}
             className="w-full bg-accent-blue text-white py-5 rounded-2xl font-black text-sm tracking-widest uppercase shadow-xl shadow-accent-blue/20 hover:bg-blue-600 transition-all hover:-translate-y-1 active:scale-[0.98] flex items-center justify-center gap-3 group"

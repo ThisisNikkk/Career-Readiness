@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import html2canvas from "html2canvas";
-import { ArrowRight, RotateCcw, TrendingUp, Download, Share2, Link, Check } from "lucide-react";
+import { ArrowRight, RotateCcw, TrendingUp, Download, Link, Check } from "lucide-react";
 import ShareCard from "./ShareCard";
 import { type AssessmentResult, type Dimension, DIMENSION_ORDER, dimensionMeta } from "../utils/assessmentData";
+import { FaFacebook, FaLinkedinIn } from "react-icons/fa6";
+import SocialShareModal from "./assessment/modals/SocialShareModal";
+import RetakeModal from "./assessment/modals/RetakeModal";
+import { getShareContent, PLATFORMS } from "./assessment/shareConstants";
 
 const BAND_STYLES = {
   low: { badge: "bg-red-50 text-red-700 border-red-200", bar: "bg-red-500", glow: "shadow-red-200", accent: "text-red-500" },
@@ -12,19 +16,13 @@ const BAND_STYLES = {
   high: { badge: "bg-emerald-50 text-emerald-700 border-emerald-200", bar: "bg-emerald-500", glow: "shadow-emerald-200", accent: "text-emerald-500" },
 };
 
-const LinkedInIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
-    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+const SubstackIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
   </svg>
 );
 
-const XIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-  </svg>
-);
-
-function RadarChart({ scores, overallScore }: { scores: Record<Dimension, number>, overallScore: number }) {
+const RadarChart = memo(({ scores, overallScore }: { scores: Record<Dimension, number>, overallScore: number }) => {
   const size = 300;
   const cx = size / 2;
   const cy = size / 2;
@@ -76,14 +74,18 @@ function RadarChart({ scores, overallScore }: { scores: Record<Dimension, number
       })}
     </svg>
   );
-}
+});
+
+RadarChart.displayName = "RadarChart";
 
 export default function Results({ result, onRetake, onBack }: { result: AssessmentResult; onRetake: () => void; onBack: () => void; }) {
   const bandStyle = BAND_STYLES[result.band];
   const radarScores = Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])) as Record<Dimension, number>;
   const shareCardRef = useRef<HTMLDivElement>(null);
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [activeModal, setActiveModal] = useState<'facebook' | 'substack' | 'retake' | null>(null);
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, []);
 
@@ -94,16 +96,13 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleShare = (platform: 'twitter' | 'linkedin') => {
-    const url = window.location.origin;
-    if (platform === 'twitter') {
-      const text = `🎯 I just scored ${result.overallScore}/100 on the Career Readiness Assessment!\n\nMy archetype: "${result.archetype}"\n\nTake yours free 👇`;
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  const handleShare = (platform: 'linkedin' | 'facebook' | 'substack') => {
+    const { linkedInText } = getShareContent(result, typeof window !== 'undefined' ? window.location.origin : '');
+
+    if (platform === 'linkedin') {
+      window.open(PLATFORMS.LINKEDIN.getUrl(linkedInText), '_blank', 'noopener,noreferrer');
     } else {
-      const dimLines = result.dimensions.map((d) => `${d.label}:${d.score}%`).join(' | ');
-      const linkedInText = `🎯 I just scored ${result.overallScore}/100 on the Career Readiness Assessment!\n\n💡 Archetype: ${result.archetype}\n\nTake yours free 👇: ${url}`;
-      const shareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(linkedInText)}`;
-      window.open(shareUrl, '_blank');
+      setActiveModal(platform);
     }
   };
 
@@ -133,6 +132,8 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
     }
   };
 
+  const shareContent = typeof window !== 'undefined' ? getShareContent(result, window.location.origin) : { text: '' };
+
   return (
     <div className="min-h-screen bg-[#FDFDFD] flex flex-col relative overflow-x-hidden pt-20">
       <div className="fixed inset-0 pointer-events-none opacity-40 z-0" style={{ backgroundImage: "radial-gradient(circle, #cbd5e1 1.2px, transparent 1.2px)", backgroundSize: "32px 32px" }} />
@@ -148,10 +149,6 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
             <button onClick={handleDownload} disabled={isGenerating} className="group flex items-center gap-2.5 text-[11px] font-black uppercase tracking-widest bg-primary text-white px-6 py-2.5 rounded-full hover:bg-slate-800 transition-all shadow-lg shadow-primary/10 disabled:opacity-50">
               {isGenerating ? <span className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />}
               {isGenerating ? "Processing..." : "Save Report"}
-            </button>
-            <button onClick={onRetake} className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-black tracking-widest uppercase text-accent-blue hover:text-blue-700 transition-colors bg-blue-50 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border border-blue-100 shadow-sm shadow-blue-500/5 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
-              <RotateCcw className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> 
-              <span>Retake</span>
             </button>
           </div>
         </div>
@@ -249,26 +246,64 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
             <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] whitespace-nowrap">Broadcast Your Results</h2>
             <div className="h-px bg-slate-200 flex-1" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button onClick={() => handleShare('linkedin')} className="bg-white border border-slate-100 p-8 rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-[#0A66C2]/10 flex items-center justify-center text-[#0A66C2] group-hover:bg-[#0A66C2] group-hover:text-white transition-all"><LinkedInIcon /></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {/* LinkedIn */}
+            <button
+              onClick={() => handleShare('linkedin')}
+              aria-label="Share on LinkedIn"
+              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center gap-3 sm:gap-4"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#0A66C2]/10 flex items-center justify-center text-[#0A66C2] group-hover:bg-[#0A66C2] group-hover:text-white transition-all duration-300 text-xl sm:text-2xl">
+                <FaLinkedinIn />
+              </div>
               <div className="text-center">
-                <div className="text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">LinkedIn</div>
-                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share to Network</div>
+                <div className="text-xs sm:text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">LinkedIn</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share to Network</div>
               </div>
             </button>
-            <button onClick={() => handleShare('twitter')} className="bg-white border border-slate-100 p-8 rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-black/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all"><XIcon /></div>
+
+            {/* Facebook */}
+            <button
+              onClick={() => handleShare('facebook')}
+              aria-label="Share on Facebook"
+              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center gap-3 sm:gap-4"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#1877F2]/10 flex items-center justify-center text-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white transition-all duration-300 text-xl sm:text-2xl">
+                <FaFacebook />
+              </div>
               <div className="text-center">
-                <div className="text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">X / Twitter</div>
-                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Post an Update</div>
+                <div className="text-xs sm:text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">Facebook</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Post an Update</div>
               </div>
             </button>
-            <button onClick={handleCopy} className="bg-white border border-slate-100 p-8 rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col items-center gap-4">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${copied ? 'bg-emerald-500 text-white' : 'bg-slate-50 text-slate-400 group-hover:bg-primary group-hover:text-white'}`}>{copied ? <Check className="w-7 h-7" /> : <Link className="w-7 h-7" />}</div>
+
+            {/* Substack */}
+            <button
+              onClick={() => handleShare('substack')}
+              aria-label="Share on Substack"
+              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center gap-3 sm:gap-4"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#FF6719]/10 flex items-center justify-center text-[#FF6719] group-hover:bg-[#FF6719] group-hover:text-white transition-all duration-300 text-xl sm:text-2xl">
+                <SubstackIcon />
+              </div>
               <div className="text-center">
-                <div className="text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">{copied ? 'Copied!' : 'Copy Link'}</div>
-                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share Anywhere</div>
+                <div className="text-xs sm:text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">Substack</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Write a Post</div>
+              </div>
+            </button>
+
+            {/* Copy Link */}
+            <button
+              onClick={handleCopy}
+              aria-label="Copy share link"
+              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center gap-3 sm:gap-4"
+            >
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-xl sm:text-2xl transition-all duration-300 ${copied ? 'bg-emerald-500 text-white' : 'bg-slate-50 text-slate-400 group-hover:bg-primary group-hover:text-white'}`}>
+                {copied ? <Check className="w-6 h-6" /> : <Link className="w-6 h-6" />}
+              </div>
+              <div className="text-center">
+                <div className="text-xs sm:text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">{copied ? 'Copied!' : 'Copy Link'}</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share Anywhere</div>
               </div>
             </button>
           </div>
@@ -302,7 +337,7 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
             <p className="text-slate-500 text-base font-medium">Join 5,000+ leaders building their future on Tita Gray's platform.</p>
           </div>
           <div className="relative z-10 flex flex-col sm:flex-row items-center gap-5">
-            <button onClick={onRetake} className="w-full sm:w-auto flex items-center justify-center gap-2.5 border-2 border-slate-200 text-slate-700 font-black px-10 py-5 rounded-[24px] hover:border-slate-800 hover:text-[#0F172A] transition-all text-[11px] uppercase tracking-widest"><RotateCcw className="w-4 h-4" /> Retake</button>
+            <button onClick={() => setActiveModal('retake')} className="w-full sm:w-auto flex items-center justify-center gap-2.5 border-2 border-slate-200 text-slate-700 font-black px-10 py-5 rounded-[24px] hover:border-slate-800 hover:text-[#0F172A] transition-all text-[11px] uppercase tracking-widest"><RotateCcw className="w-4 h-4" /> Retake</button>
             <button onClick={onBack} className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-emerald-500 text-white font-black px-10 py-5 rounded-[24px] hover:bg-emerald-600 hover:-translate-y-1 transition-all text-[11px] uppercase tracking-widest shadow-xl shadow-emerald-200">Access Resources <ArrowRight className="w-4 h-4" strokeWidth={3} /></button>
           </div>
         </div>
@@ -311,6 +346,20 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
       <div style={{ position: "absolute", top: "-9999px", left: "-9999px", pointerEvents: "none" }}>
         <ShareCard ref={shareCardRef} result={result} />
       </div>
+
+      {/* Extracted Modals */}
+      <SocialShareModal
+        isOpen={activeModal === 'facebook' || activeModal === 'substack'}
+        platform={(activeModal === 'facebook' || activeModal === 'substack') ? activeModal : 'facebook'}
+        shareText={shareContent.text}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <RetakeModal
+        isOpen={activeModal === 'retake'}
+        onClose={() => setActiveModal(null)}
+        onConfirm={onRetake}
+      />
 
       <style dangerouslySetInnerHTML={{
         __html: `

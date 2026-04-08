@@ -21,19 +21,19 @@ export default function CalculatingScreen() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-blue/5 blur-[120px] rounded-full pointer-events-none animate-pulse-slow" />
 
       {/* Main Content Hub */}
-      <div className="text-center flex flex-col items-center gap-10 relative z-10 max-w-3xl">
+      <div className="text-center flex flex-col items-center gap-8 sm:gap-10 relative z-10 max-w-3xl">
 
         {/* Professional Loader Group */}
         <div className="relative group">
           {/* External Ring */}
-          <div className="w-32 h-32 rounded-full border border-slate-100 flex items-center justify-center relative">
+          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-slate-100 flex items-center justify-center relative">
             <div className="absolute inset-0 rounded-full border-t-2 border-accent-blue animate-spin" style={{ animationDuration: '3s' }} />
             <div className="absolute inset-2 rounded-full border-b-2 border-slate-200 animate-spin-reverse" style={{ animationDuration: '4s' }} />
 
             {/* Center Icon Box */}
-            <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-xl relative overflow-hidden transition-all duration-500">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-xl relative overflow-hidden transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 to-transparent" />
-              <BarChart3 className="w-10 h-10 text-accent-blue" />
+              <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-accent-blue" />
 
               {/* Scanning Beam */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent-blue/40 to-transparent animate-scan" />
@@ -46,41 +46,41 @@ export default function CalculatingScreen() {
         </div>
 
         {/* Branding & Status */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white border border-slate-100 rounded-full shadow-sm">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
             </span>
-            <span className="text-[11px] font-black text-accent-blue tracking-[0.25em] uppercase">Analysis In Progress</span>
+            <span className="text-[10px] sm:text-[11px] font-black text-accent-blue tracking-[0.25em] uppercase">Analysis In Progress</span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl font-black text-[#0F172A] tracking-tighter leading-[1.05]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#0F172A] tracking-tighter leading-[1.05] text-balance">
             Synthesizing Your <br />
             <span className="bg-gradient-to-r from-accent-blue to-indigo-600 bg-clip-text text-transparent">Professional DNA</span>
           </h2>
 
-          <p className="text-slate-500 text-lg md:text-xl font-medium max-w-lg mx-auto leading-relaxed">
+          <p className="text-slate-500 text-base sm:text-lg md:text-xl font-medium max-w-lg mx-auto leading-relaxed px-4">
             Benchmarking your profile across <span className="text-accent-blue font-black">5 critical metrics</span> to generate your personalized readiness roadmap.
           </p>
         </div>
       </div>
 
       {/* Progress Chips (Light Mode) */}
-      <div className="flex flex-wrap gap-4 justify-center max-w-2xl relative z-10 px-4">
+      <div className="flex flex-wrap gap-2.5 sm:gap-4 justify-center max-w-2xl relative z-10 px-4">
         {dims.map((d, i) => (
           <div
             key={d}
-            className="group bg-white border border-slate-100 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-sm transition-all hover:shadow-md hover:-translate-y-1"
+            className="group bg-white border border-slate-100 px-3.5 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl flex items-center gap-2 sm:gap-3 shadow-sm transition-all hover:shadow-md hover:-translate-y-1"
             style={{
               animation: 'fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
               animationDelay: `${i * 0.15 + 0.8}s`
             }}
           >
-            <div className="w-5 h-5 rounded-full bg-accent-blue/10 flex items-center justify-center">
-              <CheckCircle2 className="w-3.5 h-3.5 text-accent-blue" />
+            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-accent-blue/10 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent-blue" />
             </div>
-            <span className="text-slate-600 text-xs font-black uppercase tracking-widest leading-none">
+            <span className="text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-widest leading-none whitespace-nowrap">
               {d}
             </span>
           </div>

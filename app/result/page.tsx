@@ -12,13 +12,13 @@ export default function ResultPage() {
   useEffect(() => {
     const saved = localStorage.getItem("career_assessment_result");
     if (!saved) {
-      router.push("/assessment");
+      router.replace("/assessment");
       return;
     }
     try {
       setResult(JSON.parse(saved));
     } catch (e) {
-      router.push("/assessment");
+      router.replace("/assessment");
     }
   }, [router]);
 

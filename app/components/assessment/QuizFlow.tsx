@@ -27,16 +27,9 @@ export default function QuizFlow({
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in-up">
-      {/* Dimension Pill */}
-      <div className="flex items-center gap-3 bg-blue-50/50 self-start px-4 py-1.5 rounded-full border border-blue-100/50">
-        <span className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse" />
-        <span className="text-[10px] font-black tracking-[0.2em] text-accent-blue uppercase">
-          {dimLabel}
-        </span>
-      </div>
 
       {/* Question */}
-      <h2 className="text-3xl md:text-4xl font-black text-[#0F172A] leading-[1.1] tracking-tight">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0F172A] leading-[1.1] tracking-tight">
         {question.text}
       </h2>
 
@@ -60,7 +53,7 @@ export default function QuizFlow({
             <button
               key={val}
               onClick={() => onAnswer(val)}
-              className={`group w-full text-left px-6 py-4 rounded-[20px] border-2 font-bold text-[15px] transition-all duration-300 relative overflow-hidden
+              className={`group w-full text-left px-4 sm:px-6 py-3 sm:py-4 rounded-[20px] border-2 font-bold text-sm sm:text-[15px] transition-all duration-300 relative overflow-hidden
                 ${isSelected
                   ? `${colors.active} shadow-xl scale-[0.98]`
                   : isPrev
@@ -68,7 +61,7 @@ export default function QuizFlow({
                     : `${colors.base}`
                 }`}
             >
-              <div className="flex items-center gap-5 relative z-10">
+              <div className="flex items-center gap-3 sm:gap-5 relative z-10">
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black shrink-0 border-2 transition-all
                   ${isSelected
                     ? "bg-white/10 border-white/20 text-white"

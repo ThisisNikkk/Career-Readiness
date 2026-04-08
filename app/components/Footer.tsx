@@ -36,26 +36,9 @@ export default function Footer() {
     <footer className="w-full bg-white pt-16 px-6 md:px-16 flex flex-col items-center">
       <div className="max-w-7xl w-full mx-auto">
 
-        {/* ── Stats Strip ─────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-14 border-b border-slate-100">
-          {[
-            { icon: Users, value: "10,000+", label: "Assessments Taken" },
-            { icon: Star, value: "4.9 / 5", label: "Average User Rating" },
-            { icon: TrendingUp, value: "90%", label: "Report Clarity Gained" },
-            { icon: Award, value: "5", label: "Career Dimensions Scored" },
-          ].map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex flex-col items-center text-center gap-1">
-              <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mb-1">
-                <Icon className="w-7 h-7 text-slate-500" strokeWidth={1.2} />
-              </div>
-              <span className="text-3xl font-medium text-[#0F172A] tracking-tight">{value}</span>
-              <span className="text-sm text-slate-400 leading-tight">{label}</span>
-            </div>
-          ))}
-        </div>
 
         {/* ── Main 3-col grid ─────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr_1fr] py-16 gap-12 lg:gap-0 lg:border-b border-slate-200">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr_1fr] py-12 md:py-16 gap-12 md:gap-16 lg:gap-0 lg:border-b border-slate-200">
 
           {/* Left Column — Contact + Quick Links only */}
           <div className="flex flex-col items-center lg:items-start justify-start text-center lg:text-left lg:pr-12 lg:border-r border-slate-200 gap-8">
@@ -114,12 +97,12 @@ export default function Footer() {
           {/* Center Column — your original, no extra buttons */}
           <div className="flex flex-col items-center justify-center text-center px-4 lg:px-16 gap-4">
 
-            <Image 
-              src="/logo.png" 
-              alt="Tita Gray Logo" 
-              width={192} 
-              height={192} 
-              className="mb-2" 
+            <Image
+              src="/logo.png"
+              alt="Tita Gray Logo"
+              width={192}
+              height={192}
+              className="mb-2"
             />
 
             <div>

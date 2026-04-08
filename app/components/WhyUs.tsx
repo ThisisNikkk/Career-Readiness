@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Award, Users, BarChart3 } from "lucide-react";
+import { Award, Users, BarChart3, Star, TrendingUp } from "lucide-react";
 import StartAssessmentButton from "./StartAssessmentButton";
 
 const stages = [
@@ -52,8 +52,8 @@ export default function WhyUs() {
                 </p>
 
                 {/* Panoramic Image - Standalone Framed Element */}
-                <div className="relative w-full max-w-7xl group mb-24">
-                    <div className="relative rounded-[40px] overflow-hidden shadow-2xl border border-slate-100 aspect-[21/9] md:aspect-[2.4/1] bg-slate-50 z-10">
+                <div className="relative w-full max-w-7xl group mb-16 md:mb-20">
+                    <div className="relative rounded-[40px] overflow-hidden shadow-2xl border border-slate-100 h-[280px] sm:aspect-[16/9] md:h-auto md:aspect-[2.4/1] bg-slate-50 z-10">
                         <Image
                             src="/why.png"
                             alt="A panoramic view of professionals from every generation"
@@ -129,6 +129,25 @@ export default function WhyUs() {
                         </div>
                     </div>
                 </div>
+
+                {/* ── Stats Strip ─────────────────────────────────────────── */}
+                <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 md:pt-2 mt-2">
+                    {[
+                        { icon: Users, value: "10,000+", label: "Assessments Taken" },
+                        { icon: Star, value: "4.9 / 5", label: "Average User Rating" },
+                        { icon: TrendingUp, value: "90%", label: "Report Clarity Gained" },
+                        { icon: Award, value: "5", label: "Career Dimensions Scored" },
+                    ].map(({ icon: Icon, value, label }) => (
+                        <div key={label} className="flex flex-col items-center text-center gap-1">
+                            <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-1 shadow-sm">
+                                <Icon className="w-6 h-6 text-slate-500" strokeWidth={1.5} />
+                            </div>
+                            <span className="text-2xl sm:text-3xl font-bold text-primary tracking-tight">{value}</span>
+                            <span className="text-xs sm:text-sm font-medium text-slate-500 leading-tight">{label}</span>
+                        </div>
+                    ))}
+                </div>
+
             </div>
 
             {/* Global style for animations */}

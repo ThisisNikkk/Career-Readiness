@@ -146,7 +146,7 @@ export default function FinalCTA() {
 
           {/* Heading */}
           <h2
-            className="text-4xl md:text-6xl font-black leading-[1.05] text-white tracking-tighter max-w-3xl"
+            className="text-3xl sm:text-4xl md:text-6xl font-black leading-[1.05] text-white tracking-tighter max-w-3xl"
             style={{ animation: "fade-in-up 0.5s 0.1s ease both" }}
           >
             Ready to Uncover{" "}

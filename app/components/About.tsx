@@ -117,8 +117,8 @@ export default function About() {
       {/* 3 + 2 Centered Grid */}
       <div className="max-w-7xl w-full mx-auto relative z-10 px-4 md:px-0">
 
-        {/* Desktop & Tablet: 3 + 2 Centered using 6-col Grid */}
-        <div className="hidden md:grid grid-cols-6 gap-6 w-full">
+        {/* Desktop: 3 + 2 Centered using 6-col Grid */}
+        <div className="hidden lg:grid grid-cols-6 gap-6 w-full">
           {/* Top row: 3 cards, spanning 2 cols each */}
           <div className="col-span-2">
             <BentoCard dimension={dimensions[0]} />
@@ -139,8 +139,15 @@ export default function About() {
           </div>
         </div>
 
-        {/* Mobile: 1-col */}
-        <div className="flex md:hidden flex-col gap-6">
+        {/* Tablet: 2-col grid */}
+        <div className="hidden md:grid lg:hidden grid-cols-2 gap-6 w-full max-w-3xl mx-auto">
+          {dimensions.map((dim) => (
+            <BentoCard key={dim.id} dimension={dim} />
+          ))}
+        </div>
+
+        {/* Mobile: 1-col stack */}
+        <div className="flex md:hidden flex-col gap-6 w-full">
           {dimensions.map((dim) => (
             <BentoCard key={dim.id} dimension={dim} />
           ))}

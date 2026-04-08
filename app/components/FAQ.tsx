@@ -117,7 +117,7 @@ export default function FAQ() {
 
                 {/* Tag + toggle */}
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className={`hidden sm:inline-flex text-[9px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-full transition-all duration-200
+                  <span className={`inline-flex text-[9px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-full transition-all duration-200
                     ${isOpen ? "bg-accent-blue/10 text-accent-blue" : "bg-slate-100 text-slate-400"}`}>
                     {faq.tag}
                   </span>
