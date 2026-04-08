@@ -23,13 +23,14 @@ export default function Header() {
 
   const navLinks = [
     { name: "Home", id: "home", href: "/#home" },
+    { name: "Why Us", id: "why-us", href: "/#why-us" },
     { name: "About", id: "about", href: "/#about" },
     { name: "Path", id: "path", href: "/#path" },
     { name: "FAQ", id: "faq", href: "/#faq" },
   ];
 
   return (
-    <header className="w-full h-24 flex items-center justify-between px-8 md:px-16 absolute top-0 left-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
+    <header className="w-full h-24 flex items-center justify-between px-8 md:px-16 absolute top-0 left-0 z-50 bg-transparent">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
@@ -48,14 +49,14 @@ export default function Header() {
             key={link.id}
             href={link.href}
             onClick={(e) => handleScrollNav(e, link.id)}
-            className="text-md font-medium text-slate-600 hover:text-accent-blue transition-colors cursor-pointer"
+            className="text-md font-medium text-black-700 hover:text-accent-blue transition-colors cursor-pointer"
           >
             {link.name}
           </a>
         ))}
         <Link
           href="/contact"
-          className={`text-md font-medium transition-colors ${pathname === "/contact" ? "text-accent-blue" : "text-slate-600 hover:text-accent-blue"
+          className={`text-md font-medium transition-colors ${pathname === "/contact" ? "text-accent-blue" : "text-black-700 hover:text-accent-blue"
             }`}
         >
           Contact

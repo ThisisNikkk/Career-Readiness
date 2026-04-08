@@ -1,7 +1,6 @@
-import React from "react";
-import Image from "next/image";
-import { Target, Zap, Compass, ShieldCheck, Share2, ArrowUpRight } from "lucide-react";
+import { FaShieldAlt } from "react-icons/fa";
 import StartAssessmentButton from "./StartAssessmentButton";
+import { FaBrain, FaCrown, FaGlobe, FaMagnifyingGlass } from "react-icons/fa6";
 
 const dimensions = [
   {
@@ -9,7 +8,7 @@ const dimensions = [
     title: "Clarity",
     tagline: "Know your north star",
     description: "How clear you are on your career direction and long-term goals.",
-    icon: <Target className="w-7 h-7" />,
+    icon: <FaMagnifyingGlass className="w-7 h-7" />,
     image: "/4.png",
   },
   {
@@ -17,7 +16,7 @@ const dimensions = [
     title: "Ownership",
     tagline: "Drive your own story",
     description: "How much you take control, create options, and follow through.",
-    icon: <Zap className="w-7 h-7" />,
+    icon: <FaCrown className="w-7 h-7" />,
     image: "/2.png",
   },
   {
@@ -25,7 +24,7 @@ const dimensions = [
     title: "Curiosity",
     tagline: "Stay hungry, explore",
     description: "How actively you seek new information and explore possibilities.",
-    icon: <Compass className="w-7 h-7" />,
+    icon: <FaBrain className="w-7 h-7" />,
     image: "/5.png",
   },
   {
@@ -33,15 +32,15 @@ const dimensions = [
     title: "Confidence",
     tagline: "Own your worth",
     description: "How resilient you feel and your comfort in owning your value.",
-    icon: <ShieldCheck className="w-7 h-7" />,
-    image: "/1.png",
+    icon: <FaShieldAlt className="w-7 h-7" />,
+    image: "/img1.png",
   },
   {
     id: "network",
     title: "Network & Visibility",
     tagline: "Build your orbit",
     description: "How well you build relationships and showcase your impact.",
-    icon: <Share2 className="w-7 h-7" />,
+    icon: <FaGlobe className="w-7 h-7" />,
     image: "/3.png",
   },
 ];
@@ -49,48 +48,28 @@ const dimensions = [
 function BentoCard({ dimension }: { dimension: (typeof dimensions)[number] }) {
   return (
     <div
-      className="group bg-white border border-slate-100 rounded-[28px] overflow-hidden flex flex-col
-                 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer"
+      className="group bg-white border border-slate-100 rounded-[32px] overflow-hidden flex flex-col
+                 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer h-full"
       style={{ boxShadow: "0 2px 12px 0 rgba(0,0,0,0.04)" }}
     >
-      {/* Illustration Container */}
-      <div className="w-full bg-slate-50 flex items-center justify-center relative overflow-hidden group/img" style={{ height: 220 }}>
-        {dimension.image ? (
-          <div className="relative w-full h-full p-6 transition-transform duration-500 group-hover:scale-105">
-            <Image
-              src={dimension.image}
-              alt={dimension.title}
-              fill
-              className="object-contain p-2"
-              priority={dimension.id === "clarity"}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
-            />
-          </div>
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-50/50">
-            <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center text-slate-200 shadow-sm">
-              {dimension.icon}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Divider */}
-      <div className="h-px bg-slate-100 mx-6" />
-
-      {/* Text content */}
-      <div className="flex flex-col gap-2.5 px-6 py-5 flex-1">
-
-        <div className="flex items-center gap-2">
-          <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-accent-blue">
+      {/* Icon & Title Area */}
+      <div className="bg-slate-50/50 flex flex-col items-center justify-center relative overflow-hidden group/icon pt-10 pb-8 px-6">
+        <div className="w-24 h-24 rounded-[28px] bg-white flex items-center justify-center text-accent-blue shadow-sm border border-slate-100 transition-all duration-500 group-hover:scale-110 group-hover:shadow-md mb-4">
+          <div className="[&>svg]:w-10 [&>svg]:h-10">
             {dimension.icon}
           </div>
-          <h3 className="text-[20px] font-bold text-primary leading-tight tracking-tight">
-            {dimension.title}
-          </h3>
         </div>
 
-        <p className="text-[15px] text-slate-400 leading-relaxed font-medium">
+        <h3 className="text-[22px] font-bold text-primary leading-tight tracking-tight relative z-10 transition-transform duration-300 group-hover:scale-105">
+          {dimension.title}
+        </h3>
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-accent-blue/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </div>
+
+      {/* Description Area */}
+      <div className="px-8 py-8 flex flex-col items-center text-center bg-white border-t border-slate-50 flex-1">
+        <p className="text-[18px] leading-relaxed text-slate-500 font-medium">
           {dimension.description}
         </p>
       </div>
@@ -102,7 +81,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="w-full py-16 md:py-24 px-6 md:px-12 flex flex-col items-center bg-background overflow-hidden relative"
+      className="w-full py-16 md:py-16 px-6 md:px-12 flex flex-col items-center bg-background overflow-hidden relative"
     >
       {/* Dot grid */}
       <div
@@ -135,32 +114,33 @@ export default function About() {
         </p>
       </div>
 
-      {/* Bento Grid */}
-      <div className="max-w-8xl w-full mx-auto relative z-10">
+      {/* 3 + 2 Centered Grid */}
+      <div className="max-w-7xl w-full mx-auto relative z-10 px-4 md:px-0">
 
-        {/* Desktop: 5-col */}
-        <div className="hidden xl:grid xl:grid-cols-5 gap-5">
-          {dimensions.map((dim) => (
-            <BentoCard key={dim.id} dimension={dim} />
-          ))}
-        </div>
-
-        {/* Tablet: 3 + 2 */}
-        <div className="hidden md:flex xl:hidden flex-col gap-5">
-          <div className="grid grid-cols-3 gap-5">
-            {dimensions.slice(0, 3).map((dim) => (
-              <BentoCard key={dim.id} dimension={dim} />
-            ))}
+        {/* Desktop & Tablet: 3 + 2 Centered using 6-col Grid */}
+        <div className="hidden md:grid grid-cols-6 gap-6 w-full">
+          {/* Top row: 3 cards, spanning 2 cols each */}
+          <div className="col-span-2">
+            <BentoCard dimension={dimensions[0]} />
           </div>
-          <div className="grid grid-cols-2 gap-5 max-w-2xl mx-auto w-full">
-            {dimensions.slice(3).map((dim) => (
-              <BentoCard key={dim.id} dimension={dim} />
-            ))}
+          <div className="col-span-2">
+            <BentoCard dimension={dimensions[1]} />
+          </div>
+          <div className="col-span-2">
+            <BentoCard dimension={dimensions[2]} />
+          </div>
+
+          {/* Bottom row: 2 cards, centered via col-start */}
+          <div className="col-span-2 col-start-2">
+            <BentoCard dimension={dimensions[3]} />
+          </div>
+          <div className="col-span-2 col-start-4">
+            <BentoCard dimension={dimensions[4]} />
           </div>
         </div>
 
         {/* Mobile: 1-col */}
-        <div className="grid md:hidden grid-cols-1 gap-4">
+        <div className="flex md:hidden flex-col gap-6">
           {dimensions.map((dim) => (
             <BentoCard key={dim.id} dimension={dim} />
           ))}

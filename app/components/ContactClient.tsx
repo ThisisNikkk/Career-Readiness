@@ -161,21 +161,27 @@ export default function ContactClient() {
           </div>
 
           <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-700">
-            <div className="relative bg-[#DBEAFE] rounded-[40px] overflow-hidden aspect-[1.1] flex items-center justify-center group shadow-2xl shadow-blue-500/10">
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
-                <div className="w-[100%] h-[100%] border-[2px] border-[#2563EB]/20 rounded-full scale-[1.2]" />
-                <div className="absolute w-[80%] h-[80%] border-[2px] border-[#2563EB]/20 rounded-full" />
-                <div className="absolute w-[60%] h-[60%] border-[2px] border-[#2563EB]/20 rounded-full" />
-                <div className="absolute w-[40%] h-[40%] border-[2px] border-[#2563EB]/20 rounded-full" />
-                <div className="absolute w-[20%] h-[20%] border-[2px] border-[#2563EB]/20 rounded-full" />
+            <div className="relative bg-[#DBEAFE] rounded-[40px] overflow-hidden aspect-[1.1] flex items-end justify-center group shadow-2xl shadow-blue-500/10 transition-all duration-500 hover:shadow-blue-500/20">
+              {/* Sonar Effect (Static) */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                {[1.2, 1, 0.8, 0.6, 0.4, 0.2].map((scale, i) => (
+                  <div
+                    key={i}
+                    className="absolute border-[2.5px] border-[#2563EB]/40 rounded-full transition-transform duration-700 group-hover:scale-110"
+                    style={{
+                      width: `${scale * 100}%`,
+                      height: `${scale * 100}%`
+                    }}
+                  />
+                ))}
               </div>
 
               <Image
-                src="/7.png"
+                src="/contact.png"
                 alt="Support Agent"
                 width={800}
                 height={800}
-                className="relative z-10 object-cover w-[90%] h-[90%] group-hover:scale-105 transition-transform duration-700"
+                className="relative z-10 w-full h-auto object-contain origin-bottom transition-all duration-700 group-hover:scale-[1.03]"
               />
             </div>
 
