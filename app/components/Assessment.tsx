@@ -40,11 +40,11 @@ interface AssessmentProps {
 // ─── Visual Sidebar Component ───────────────────────────────────────────
 
 const DIMENSION_IMAGES: Record<string, string> = {
-  clarity: "/4.png",
-  ownership: "/2.png",
-  curiosity: "/5.png",
-  confidence: "/1.png",
-  network: "/3.png",
+  clarity: "/clarity.png",
+  ownership: "/ownership.png",
+  curiosity: "/curiosity.png",
+  confidence: "/confidence.png",
+  network: "/network.png",
 };
 
 function VisualSidebar({
@@ -54,7 +54,7 @@ function VisualSidebar({
   activeDimension?: string;
   dimensionMeta: Record<string, { label: string; weight: number }>
 }) {
-  const imageUrl = activeDimension ? DIMENSION_IMAGES[activeDimension] : "/6.png";
+  const imageUrl = activeDimension ? DIMENSION_IMAGES[activeDimension] : "/onboard.png";
   const dimensionLabel = activeDimension ? dimensionMeta[activeDimension]?.label : null;
 
   return (
@@ -72,15 +72,15 @@ function VisualSidebar({
           </div>
         )}
 
-        <div className="w-full h-full relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-100 flex flex-col items-center justify-center p-10 z-10 transition-all duration-500">
+        <div className="w-full h-full relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-100 flex flex-col items-end justify-center z-10 transition-all duration-500">
           <Image
             key={imageUrl}
             src={imageUrl}
             alt={dimensionLabel ? `${dimensionLabel} illustration` : "Professional"}
-            fill
-            className="object-contain p-10 animate-fade-in-up"
+            width={800}
+            height={800}
+            className="w-full h-auto object-contain origin-bottom animate-fade-in-up"
             priority
-            sizes="(max-width: 1024px) 100vw, 50vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
         </div>
