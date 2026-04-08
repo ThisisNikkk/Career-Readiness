@@ -4,8 +4,8 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { RoleLevel, Goal } from "../../utils/assessmentData";
 
-const ROLE_OPTIONS: RoleLevel[] = ["Student", "Early Career", "Mid", "Senior"];
-const GOAL_OPTIONS: Goal[] = ["Grow in current role", "Pivot", "Leadership", "Entrepreneurship"];
+const ROLE_OPTIONS: RoleLevel[] = ["Student", "Early Career", "Mid Career", "Seasoned Professional"];
+const GOAL_OPTIONS: Goal[] = ["Grow in Current Role", "Career Pivot", "Leadership Transition", "Entrepreneur"];
 
 interface OnboardingData {
   role: RoleLevel | null;

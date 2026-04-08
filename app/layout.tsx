@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://readiness.titagray.com"),
   title: "Career Readiness Assessment",
   description: "Are you naturally coasting, climbing, or ready to leap? Answer 15 questions to uncover your Career Readiness profile and get a personal action plan.",
   openGraph: {

@@ -13,7 +13,7 @@ const faqData = [
   {
     question: "How long does the assessment take?",
     answer:
-      "The assessment is designed to be quick yet deep. It takes approximately 3 minutes to complete 20 targeted behavioral statements.",
+      "The assessment is designed to be quick yet deep. It takes approximately 3 minutes to complete 25 targeted behavioral statements.",
     tag: "Experience",
   },
   {

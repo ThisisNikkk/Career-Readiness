@@ -2,8 +2,8 @@
 
 export type Dimension = "clarity" | "ownership" | "curiosity" | "confidence" | "network";
 export type Band = "low" | "medium" | "high";
-export type RoleLevel = "Student" | "Early Career" | "Mid" | "Senior";
-export type Goal = "Grow in current role" | "Pivot" | "Leadership" | "Entrepreneurship";
+export type RoleLevel = "Student" | "Early Career" | "Mid Career" | "Seasoned Professional";
+export type Goal = "Grow in Current Role" | "Career Pivot" | "Leadership Transition" | "Entrepreneur";
 
 export interface Question {
   id: number;
@@ -33,34 +33,39 @@ export interface AssessmentResult {
 
 export const questions: Question[] = [
   // Clarity
-  { id: 1, dimension: "clarity", text: "I can describe the kind of work I want to be doing in the next 3 years in one clear sentence." },
-  { id: 2, dimension: "clarity", text: "I know which skills I must build in the next 12 months to reach my next role." },
-  { id: 3, dimension: "clarity", text: "I regularly review my career direction instead of just 'seeing what happens'." },
-  { id: 4, dimension: "clarity", text: "In the past 30 days, I have spent at least one hour actively mapping out my career trajectory." }, // Behavioral Receipt
+  { id: 1, dimension: "clarity", text: "I can describe the kind of work I want next without overthinking it." },
+  { id: 2, dimension: "clarity", text: "I know what “career growth” means for me right now." },
+  { id: 3, dimension: "clarity", text: "I have a realistic picture of where I want to be in the next 1–3 years." },
+  { id: 4, dimension: "clarity", text: "I can name the biggest gap between where I am and where I want to go." },
+  { id: 5, dimension: "clarity", text: "I regularly check whether my current path still fits my goals." },
 
   // Ownership
-  { id: 5, dimension: "ownership", text: "In the last 90 days, I've taken a specific action (course, project, application) to move my career forward." },
-  { id: 6, dimension: "ownership", text: "If I feel stuck at work, I create options instead of waiting for my manager or company to fix it." },
-  { id: 7, dimension: "ownership", text: "I track my achievements so I can clearly show my impact." },
-  { id: 8, dimension: "ownership", text: "In the past 30 days, I have proactively asked for feedback to improve my performance." }, // Behavioral Receipt
+  { id: 6, dimension: "ownership", text: "I take action on my career instead of waiting for someone else to guide me." },
+  { id: 7, dimension: "ownership", text: "I follow through when I set career goals for myself." },
+  { id: 8, dimension: "ownership", text: "I actively look for opportunities to grow, even if they are outside my comfort zone." },
+  { id: 9, dimension: "ownership", text: "I keep track of my wins, skills, or accomplishments in a way I can use later." },
+  { id: 10, dimension: "ownership", text: "When I feel stuck, I make a plan rather than staying in place." },
 
   // Curiosity
-  { id: 9, dimension: "curiosity", text: "I consistently seek out new information about my industry or roles I'm interested in." },
-  { id: 10, dimension: "curiosity", text: "I talk to people in roles I aspire to, even if it feels uncomfortable at first." },
-  { id: 11, dimension: "curiosity", text: "I treat my career like an experiment and regularly try small tests (side projects, stretch tasks, etc.)." },
-  { id: 12, dimension: "curiosity", text: "In the past 30 days, I have read an article, book, or attended a seminar outside of my immediate job requirements." }, // Behavioral Receipt
+  { id: 11, dimension: "curiosity", text: "I like exploring career options I have not seriously considered before." },
+  { id: 12, dimension: "curiosity", text: "I ask questions and learn about different roles, industries, or paths." },
+  { id: 13, dimension: "curiosity", text: "I pay attention to trends that could affect my future opportunities." },
+  { id: 14, dimension: "curiosity", text: "I am open to trying new experiences that could expand my career direction." },
+  { id: 15, dimension: "curiosity", text: "I seek out people, content, or resources that broaden how I think about my future." },
 
   // Confidence
-  { id: 13, dimension: "confidence", text: "I believe my skills will stay valuable even if my current role disappeared tomorrow." },
-  { id: 14, dimension: "confidence", text: "Rejection (e.g., from an application or promotion) motivates me to adjust and try again." },
-  { id: 15, dimension: "confidence", text: "I feel comfortable asking for promotions, raises, or new opportunities when I'm ready." },
-  { id: 16, dimension: "confidence", text: "In the past 30 days, I have confidently voiced an unpopular opinion or new idea in a professional setting." }, // Behavioral Receipt
+  { id: 16, dimension: "confidence", text: "I believe I can handle the challenges that come with career growth." },
+  { id: 17, dimension: "confidence", text: "I feel capable of learning what I need to succeed in my next role." },
+  { id: 18, dimension: "confidence", text: "I can recover when a career goal does not work out the first time." },
+  { id: 19, dimension: "confidence", text: "I am comfortable advocating for myself when an opportunity matters." },
+  { id: 20, dimension: "confidence", text: "I trust that I have value to offer, even if I am still growing." },
 
   // Network & Visibility
-  { id: 17, dimension: "network", text: "I have at least 3–5 people I could message today for advice or referrals related to my next move." },
-  { id: 18, dimension: "network", text: "My online presence (e.g., LinkedIn, portfolio, social) clearly reflects the kind of roles I want." },
-  { id: 19, dimension: "network", text: "I intentionally add value to my network (sharing insights, connections, support), not just ask for help." },
-  { id: 20, dimension: "network", text: "In the past 30 days, I have initiated contact with someone solely to build or maintain a professional relationship." }, // Behavioral Receipt
+  { id: 21, dimension: "network", text: "I have people in my network I could reach out to for career advice." },
+  { id: 22, dimension: "network", text: "I make a point to stay visible to the people and spaces that matter for my goals." },
+  { id: 23, dimension: "network", text: "I am intentional about building relationships that support my growth." },
+  { id: 24, dimension: "network", text: "I know how to talk about my strengths in a way that feels natural." },
+  { id: 25, dimension: "network", text: "I use my online presence to reflect the direction I want my career to go." },
 ];
 
 // ─── Labels & Weights ─────────────────────────────────────────────────────────

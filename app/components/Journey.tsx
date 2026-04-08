@@ -6,7 +6,7 @@ export default function Journey() {
     {
       number: "01",
       title: "The Assessment",
-      description: "Complete a targeted 20-question diagnostic designed to pinpoint your exact career readiness state in under 3 minutes.",
+      description: "Complete a targeted 25-question diagnostic designed to pinpoint your exact career readiness state in under 3 minutes.",
       icon: <ClipboardCheck className="w-6 h-6 text-accent-blue" />,
     },
     {
