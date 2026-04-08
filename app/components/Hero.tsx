@@ -69,7 +69,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-base md:text-lg text-primary/70 leading-relaxed max-w-md mb-10">
-              Answer 20 quick questions to reveal if you&apos;re coasting, climbing, or ready to leap. Find out where you stand and get your personalized action plan.
+              Answer 25 quick questions to reveal if you&apos;re coasting, climbing, or ready to leap. Find out where you stand and get your personalized action plan.
             </p>
 
             <StartAssessmentButton />
