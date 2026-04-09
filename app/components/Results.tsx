@@ -2,12 +2,13 @@
 
 import React, { useRef, useState, useEffect, memo } from "react";
 import html2canvas from "html2canvas";
-import { ArrowRight, RotateCcw, TrendingUp, Download, Link, Check } from "lucide-react";
+import { ArrowRight, RotateCcw, TrendingUp, Download, Link, Check, Mail } from "lucide-react";
 import ShareCard from "./ShareCard";
 import { type AssessmentResult, type Dimension, DIMENSION_ORDER, dimensionMeta } from "../utils/assessmentData";
 import { FaFacebook, FaLinkedinIn } from "react-icons/fa6";
 import SocialShareModal from "./assessment/modals/SocialShareModal";
 import RetakeModal from "./assessment/modals/RetakeModal";
+import EmailShareModal from "./assessment/modals/EmailShareModal";
 import { getShareContent, PLATFORMS } from "./assessment/shareConstants";
 
 const BAND_STYLES = {
@@ -53,14 +54,14 @@ const RadarChart = memo(({ scores, overallScore }: { scores: Record<Dimension, n
       ))}
       <polygon
         points={scorePolygon}
-        fill={overallScore < 40 ? 'rgba(239,68,68,0.12)' : overallScore < 75 ? 'rgba(245,158,11,0.12)' : 'rgba(16,185,129,0.12)'}
-        stroke={overallScore < 40 ? 'rgba(239,68,68,0.8)' : overallScore < 75 ? 'rgba(245,158,11,0.8)' : 'rgba(16,185,129,0.8)'}
+        fill={overallScore < 50 ? 'rgba(239,68,68,0.12)' : overallScore < 75 ? 'rgba(245,158,11,0.12)' : 'rgba(16,185,129,0.12)'}
+        stroke={overallScore < 50 ? 'rgba(239,68,68,0.8)' : overallScore < 75 ? 'rgba(245,158,11,0.8)' : 'rgba(16,185,129,0.8)'}
         strokeWidth={3}
         strokeLinejoin="round"
         className="filter drop-shadow-[0_0_8px_rgba(16,185,129,0.2)]"
       />
       {scorePoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r={5} fill={overallScore < 40 ? '#EF4444' : overallScore < 75 ? '#F59E0B' : '#10B981'} stroke="white" strokeWidth={2} />
+        <circle key={i} cx={p.x} cy={p.y} r={5} fill={overallScore < 50 ? '#EF4444' : overallScore < 75 ? '#F59E0B' : '#10B981'} stroke="white" strokeWidth={2} />
       ))}
       {dims.map((d, i) => {
         const angle = (Math.PI * 2 * i) / N - Math.PI / 2;
@@ -85,7 +86,7 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeModal, setActiveModal] = useState<'facebook' | 'substack' | 'retake' | null>(null);
+  const [activeModal, setActiveModal] = useState<'facebook' | 'substack' | 'retake' | 'email' | null>(null);
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, []);
 
@@ -102,8 +103,12 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
     if (platform === 'linkedin') {
       window.open(PLATFORMS.LINKEDIN.getUrl(linkedInText), '_blank', 'noopener,noreferrer');
     } else {
-      setActiveModal(platform);
+      setActiveModal(platform as any);
     }
+  };
+
+  const handleEmailShare = () => {
+    setActiveModal('email');
   };
 
   const handleDownload = async () => {
@@ -167,7 +172,7 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
           <div className="relative flex items-center justify-center w-56 h-56">
             <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
               <circle cx="100" cy="100" r="82" fill="none" stroke="#F1F5F9" strokeWidth="12" />
-              <circle cx="100" cy="100" r="82" fill="none" stroke={result.overallScore < 40 ? '#EF4444' : result.overallScore < 75 ? '#F59E0B' : '#10B981'} strokeWidth="12" strokeLinecap="round" strokeDasharray={`${2 * Math.PI * 82}`} strokeDashoffset={`${2 * Math.PI * 82 * (1 - result.overallScore / 100)}`} className="transition-all duration-1000 ease-out" style={{ filter: `drop-shadow(0 0 8px ${result.overallScore < 40 ? 'rgba(239,68,68,0.3)' : result.overallScore < 75 ? 'rgba(245,158,11,0.3)' : 'rgba(16,185,129,0.3)'})` }} />
+              <circle cx="100" cy="100" r="82" fill="none" stroke={result.overallScore < 50 ? '#EF4444' : result.overallScore < 75 ? '#F59E0B' : '#10B981'} strokeWidth="12" strokeLinecap="round" strokeDasharray={`${2 * Math.PI * 82}`} strokeDashoffset={`${2 * Math.PI * 82 * (1 - result.overallScore / 100)}`} className="transition-all duration-1000 ease-out" style={{ filter: `drop-shadow(0 0 8px ${result.overallScore < 50 ? 'rgba(239,68,68,0.3)' : result.overallScore < 75 ? 'rgba(245,158,11,0.3)' : 'rgba(16,185,129,0.3)'})` }} />
             </svg>
             <div className="absolute text-center">
               <div className="text-7xl font-black text-[#0F172A] tracking-tighter leading-none">{result.overallScore}</div>
@@ -292,6 +297,21 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
               </div>
             </button>
 
+            {/* Email */}
+            <button
+              onClick={handleEmailShare}
+              aria-label="Share via Email"
+              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center gap-3 sm:gap-4"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-accent-blue group-hover:bg-accent-blue group-hover:text-white transition-all duration-300 text-xl sm:text-2xl">
+                <Mail className="w-6 h-6" />
+              </div>
+              <div className="text-center">
+                <div className="text-xs sm:text-sm font-black text-[#0F172A] uppercase tracking-widest mb-1">Email</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Send Report</div>
+              </div>
+            </button>
+
             {/* Copy Link */}
             <button
               onClick={handleCopy}
@@ -359,6 +379,11 @@ export default function Results({ result, onRetake, onBack }: { result: Assessme
         isOpen={activeModal === 'retake'}
         onClose={() => setActiveModal(null)}
         onConfirm={onRetake}
+      />
+
+      <EmailShareModal
+        isOpen={activeModal === 'email'}
+        onClose={() => setActiveModal(null)}
       />
 
       <style dangerouslySetInnerHTML={{

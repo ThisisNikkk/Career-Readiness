@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Sparkles } from "lucide-react";
 import { Question, dimensionMeta, likertLabels } from "../../utils/assessmentData";
 
 interface QuizFlowProps {
@@ -12,6 +12,7 @@ interface QuizFlowProps {
   selected: number | null;
   onAnswer: (value: number) => void;
   onBack: () => void;
+  isAdvanced?: boolean;
 }
 
 export default function QuizFlow({
@@ -22,11 +23,20 @@ export default function QuizFlow({
   selected,
   onAnswer,
   onBack,
+  isAdvanced,
 }: QuizFlowProps) {
   const dimLabel = dimensionMeta[question.dimension].label;
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in-up">
+
+      {/* Advanced Indicator */}
+      {/* {isAdvanced && (
+        <div className="inline-flex self-start items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-100/50">
+          <Sparkles className="w-3 h-3 text-blue-600" />
+          <span className="text-[9px] font-black text-blue-600 tracking-[0.15em] uppercase">Advanced Question</span>
+        </div>
+      )} */}
 
       {/* Question */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0F172A] leading-[1.1] tracking-tight">
