@@ -2,14 +2,18 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, BarChart3 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowLeft, BarChart3, Sparkles } from "lucide-react";
 import {
   calculateResults,
+  calculateAdvancedResults,
+  coreQuestions,
+  advancedQuestions,
   type RoleLevel,
   type Goal,
   type Question,
   type Dimension,
+  type AssessmentPlan,
 } from "../utils/assessmentData";
 
 // Sub-components
@@ -17,6 +21,7 @@ import OnboardingFlow from "./assessment/OnboardingFlow";
 import QuizFlow from "./assessment/QuizFlow";
 import CalculatingScreen from "./assessment/CalculatingScreen";
 import PreAssessmentModal from "./assessment/PreAssessmentModal";
+import AdvancedUnlockModal from "./assessment/AdvancedUnlockModal";
 
 type Step = "onboarding" | "quiz" | "calculating" | "results";
 
@@ -49,10 +54,12 @@ const DIMENSION_IMAGES: Record<string, string> = {
 
 function VisualSidebar({
   activeDimension,
-  dimensionMeta
+  dimensionMeta,
+  isAdvancedPhase,
 }: {
   activeDimension?: string;
-  dimensionMeta: Record<string, { label: string; weight: number }>
+  dimensionMeta: Record<string, { label: string; weight: number }>;
+  isAdvancedPhase?: boolean;
 }) {
   const imageUrl = activeDimension ? DIMENSION_IMAGES[activeDimension] : "/onboard.png";
   const dimensionLabel = activeDimension ? dimensionMeta[activeDimension]?.label : null;
@@ -69,6 +76,12 @@ function VisualSidebar({
             <h2 className="text-4xl lg:text-5xl font-black text-[#0F172A] tracking-tighter leading-none">
               {dimensionLabel}
             </h2>
+            {isAdvancedPhase && (
+              <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-100/50">
+                <Sparkles className="w-3 h-3 text-blue-600" />
+                <span className="text-[9px] font-black text-blue-600 tracking-[0.15em] uppercase">Advanced</span>
+              </div>
+            )}
           </div>
         )}
 
@@ -135,32 +148,52 @@ function VisualSidebar({
 
 export default function Assessment({ onBack, initialMetadata }: AssessmentProps) {
   const router = useRouter();
-  const { questions, dimensionMeta, totalQ } = {
-    ...initialMetadata,
-    totalQ: initialMetadata.questions.length
-  };
+  const searchParams = useSearchParams();
+  const { dimensionMeta } = initialMetadata;
 
-  const [step, setStep] = useState<Step>("onboarding");
+  // Detect if we're entering the advanced phase via URL
+  const isAdvancedReentry = searchParams.get("plan") === "advanced";
+
+  // Active question set depends on phase
+  const activeQuestions = isAdvancedReentry ? advancedQuestions : coreQuestions;
+  const totalQ = activeQuestions.length;
+
+  const [step, setStep] = useState<Step>(isAdvancedReentry ? "quiz" : "onboarding");
   const [onboarding, setOnboarding] = useState<OnboardingData>({ role: null, goal: null });
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [selected, setSelected] = useState<number | null>(null);
   const [showPreModal, setShowPreModal] = useState(false);
+  const [showAdvancedModal, setShowAdvancedModal] = useState(isAdvancedReentry);
 
-  // Robust fix for the retake flow landing on the calculating screen
+  // Reset state when entering the core flow (fresh assessment start)
   React.useEffect(() => {
-    // Clear any existing results to enforce a fresh completion for access to results/checkout
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("career_assessment_result");
+    if (!isAdvancedReentry) {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("career_assessment_result");
+      }
+      setStep("onboarding");
+      setOnboarding({ role: null, goal: null });
+      setCurrentQ(0);
+      setAnswers({});
+      setSelected(null);
+      setShowPreModal(false);
+      setShowAdvancedModal(false);
     }
-    
-    setStep("onboarding");
-    setOnboarding({ role: null, goal: null });
-    setCurrentQ(0);
-    setAnswers({});
-    setSelected(null);
-    setShowPreModal(false);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdvancedReentry]);
+
+  // Reset state when entering the advanced flow (re-entry from checkout)
+  React.useEffect(() => {
+    if (isAdvancedReentry) {
+      setStep("quiz");
+      setCurrentQ(0);
+      setAnswers({});
+      setSelected(null);
+      setShowPreModal(false);
+      setShowAdvancedModal(true);
+    }
+  }, [isAdvancedReentry]);
 
   const handleExit = () => {
     if (onBack) {
@@ -173,7 +206,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
   function handleAnswer(value: number) {
     setSelected(value);
     setTimeout(() => {
-      const qId = questions[currentQ].id;
+      const qId = activeQuestions[currentQ].id;
       const newAnswers = { ...answers, [qId]: value };
       setAnswers(newAnswers);
       setSelected(null);
@@ -181,14 +214,32 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
       if (currentQ < totalQ - 1) {
         setCurrentQ(currentQ + 1);
       } else {
+        // Quiz complete
         setStep("calculating");
-        const res = calculateResults(newAnswers);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("career_assessment_result", JSON.stringify(res));
+
+        if (isAdvancedReentry) {
+          // Advanced phase complete — blend with stored core answers
+          const storedCore = localStorage.getItem("career_assessment_core_answers");
+          const coreAnswers: Record<number, number> = storedCore ? JSON.parse(storedCore) : {};
+          const res = calculateAdvancedResults(coreAnswers, newAnswers);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("career_assessment_result", JSON.stringify(res));
+            localStorage.setItem("career_assessment_plan", "advanced");
+          }
+          setTimeout(() => {
+            router.push("/result");
+          }, 2800);
+        } else {
+          // Core phase complete — store core answers + standard result, go to checkout
+          const res = calculateResults(newAnswers);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("career_assessment_result", JSON.stringify(res));
+            localStorage.setItem("career_assessment_core_answers", JSON.stringify(newAnswers));
+          }
+          setTimeout(() => {
+            router.push("/checkout");
+          }, 2800);
         }
-        setTimeout(() => {
-          router.push("/checkout");
-        }, 2800);
       }
     }, 350);
   }
@@ -196,6 +247,9 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
   function handleBack() {
     if (currentQ > 0) {
       setCurrentQ(currentQ - 1);
+    } else if (isAdvancedReentry) {
+      // Going back from advance Q1 → back to checkout
+      router.push("/checkout");
     } else {
       setStep("onboarding");
     }
@@ -205,7 +259,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
     return <CalculatingScreen />;
   }
 
-  const q = questions[currentQ];
+  const q = activeQuestions[currentQ];
 
   return (
     <div className="h-screen bg-white relative font-sans selection:bg-accent-blue/10 selection:text-accent-blue overflow-hidden flex flex-col">
@@ -225,7 +279,10 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
 
       <div className="fixed top-0 left-0 w-full bg-slate-100 h-1 z-[100]">
         <div
-          className="h-full bg-accent-blue transition-all duration-700 ease-out shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+          className={`h-full transition-all duration-700 ease-out ${isAdvancedReentry
+            ? "bg-gradient-to-r from-blue-600 to-indigo-600 shadow-[0_0_12px_rgba(99,102,241,0.5)]"
+            : "bg-accent-blue shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+            }`}
           style={{ width: step === "onboarding" ? "0%" : `${((currentQ + 1) / totalQ) * 100}%` }}
         />
       </div>
@@ -241,6 +298,12 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
             </button>
             {step !== "onboarding" && (
               <div className="flex items-center gap-3">
+                {/* {isAdvancedReentry && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-100/50 mr-1">
+                    <Sparkles className="w-3 h-3 text-blue-600" />
+                    <span className="text-[9px] font-black text-blue-600 tracking-[0.15em] uppercase">Advanced</span>
+                  </div>
+                )} */}
                 <span className="text-[10px] font-black text-slate-300 tracking-[0.2em] uppercase">Step</span>
                 <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 border border-blue-100 text-accent-blue font-black tabular-nums shadow-sm">
                   {currentQ + 1}
@@ -267,6 +330,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
                   selected={selected}
                   onAnswer={handleAnswer}
                   onBack={handleBack}
+                  isAdvanced={isAdvancedReentry}
                 />
               )}
             </div>
@@ -276,6 +340,7 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
         <VisualSidebar
           activeDimension={step === "onboarding" ? undefined : q?.dimension}
           dimensionMeta={dimensionMeta}
+          isAdvancedPhase={isAdvancedReentry}
         />
       </div>
 
@@ -299,7 +364,19 @@ export default function Assessment({ onBack, initialMetadata }: AssessmentProps)
           onClose={() => setShowPreModal(false)}
         />
       )}
+
+      {showAdvancedModal && (
+        <AdvancedUnlockModal
+          onStart={() => {
+            setShowAdvancedModal(false);
+            setStep("quiz");
+          }}
+          onClose={() => {
+            setShowAdvancedModal(false);
+            router.push("/checkout");
+          }}
+        />
+      )}
     </div>
   );
 }
-

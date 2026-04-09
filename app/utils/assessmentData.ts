@@ -4,11 +4,13 @@ export type Dimension = "clarity" | "ownership" | "curiosity" | "confidence" | "
 export type Band = "low" | "medium" | "high";
 export type RoleLevel = "Student" | "Early Career" | "Mid Career" | "Seasoned Professional";
 export type Goal = "Grow in Current Role" | "Career Pivot" | "Leadership Transition" | "Entrepreneur";
+export type AssessmentPlan = "standard" | "advanced";
 
 export interface Question {
   id: number;
   text: string;
   dimension: Dimension;
+  type: "core" | "advanced";
 }
 
 export interface DimensionResult {
@@ -27,46 +29,91 @@ export interface AssessmentResult {
   archetypeDescription: string;
   dimensions: DimensionResult[];
   actionPlan: string[];
+  planType: AssessmentPlan;
 }
 
 // ─── Question Bank ────────────────────────────────────────────────────────────
 
 export const questions: Question[] = [
+  // ── Core Questions (1–25) ──────────────────────────────
+
   // Clarity
-  { id: 1, dimension: "clarity", text: "I can describe the kind of work I want next without overthinking it." },
-  { id: 2, dimension: "clarity", text: "I know what “career growth” means for me right now." },
-  { id: 3, dimension: "clarity", text: "I have a realistic picture of where I want to be in the next 1–3 years." },
-  { id: 4, dimension: "clarity", text: "I can name the biggest gap between where I am and where I want to go." },
-  { id: 5, dimension: "clarity", text: "I regularly check whether my current path still fits my goals." },
+  { id: 1, type: "core", dimension: "clarity", text: "I can describe the kind of work I want next without overthinking it." },
+  { id: 2, type: "core", dimension: "clarity", text: "I know what \u201ccareer growth\u201d means for me right now." },
+  { id: 3, type: "core", dimension: "clarity", text: "I have a realistic picture of where I want to be in the next 1\u20133 years." },
+  { id: 4, type: "core", dimension: "clarity", text: "I can name the biggest gap between where I am and where I want to go." },
+  { id: 5, type: "core", dimension: "clarity", text: "I regularly check whether my current path still fits my goals." },
 
   // Ownership
-  { id: 6, dimension: "ownership", text: "I take action on my career instead of waiting for someone else to guide me." },
-  { id: 7, dimension: "ownership", text: "I follow through when I set career goals for myself." },
-  { id: 8, dimension: "ownership", text: "I actively look for opportunities to grow, even if they are outside my comfort zone." },
-  { id: 9, dimension: "ownership", text: "I keep track of my wins, skills, or accomplishments in a way I can use later." },
-  { id: 10, dimension: "ownership", text: "When I feel stuck, I make a plan rather than staying in place." },
+  { id: 6, type: "core", dimension: "ownership", text: "I take action on my career instead of waiting for someone else to guide me." },
+  { id: 7, type: "core", dimension: "ownership", text: "I follow through when I set career goals for myself." },
+  { id: 8, type: "core", dimension: "ownership", text: "I actively look for opportunities to grow, even if they are outside my comfort zone." },
+  { id: 9, type: "core", dimension: "ownership", text: "I keep track of my wins, skills, or accomplishments in a way I can use later." },
+  { id: 10, type: "core", dimension: "ownership", text: "When I feel stuck, I make a plan rather than staying in place." },
 
   // Curiosity
-  { id: 11, dimension: "curiosity", text: "I like exploring career options I have not seriously considered before." },
-  { id: 12, dimension: "curiosity", text: "I ask questions and learn about different roles, industries, or paths." },
-  { id: 13, dimension: "curiosity", text: "I pay attention to trends that could affect my future opportunities." },
-  { id: 14, dimension: "curiosity", text: "I am open to trying new experiences that could expand my career direction." },
-  { id: 15, dimension: "curiosity", text: "I seek out people, content, or resources that broaden how I think about my future." },
+  { id: 11, type: "core", dimension: "curiosity", text: "I like exploring career options I have not seriously considered before." },
+  { id: 12, type: "core", dimension: "curiosity", text: "I ask questions and learn about different roles, industries, or paths." },
+  { id: 13, type: "core", dimension: "curiosity", text: "I pay attention to trends that could affect my future opportunities." },
+  { id: 14, type: "core", dimension: "curiosity", text: "I am open to trying new experiences that could expand my career direction." },
+  { id: 15, type: "core", dimension: "curiosity", text: "I seek out people, content, or resources that broaden how I think about my future." },
 
   // Confidence
-  { id: 16, dimension: "confidence", text: "I believe I can handle the challenges that come with career growth." },
-  { id: 17, dimension: "confidence", text: "I feel capable of learning what I need to succeed in my next role." },
-  { id: 18, dimension: "confidence", text: "I can recover when a career goal does not work out the first time." },
-  { id: 19, dimension: "confidence", text: "I am comfortable advocating for myself when an opportunity matters." },
-  { id: 20, dimension: "confidence", text: "I trust that I have value to offer, even if I am still growing." },
+  { id: 16, type: "core", dimension: "confidence", text: "I believe I can handle the challenges that come with career growth." },
+  { id: 17, type: "core", dimension: "confidence", text: "I feel capable of learning what I need to succeed in my next role." },
+  { id: 18, type: "core", dimension: "confidence", text: "I can recover when a career goal does not work out the first time." },
+  { id: 19, type: "core", dimension: "confidence", text: "I am comfortable advocating for myself when an opportunity matters." },
+  { id: 20, type: "core", dimension: "confidence", text: "I trust that I have value to offer, even if I am still growing." },
 
   // Network & Visibility
-  { id: 21, dimension: "network", text: "I have people in my network I could reach out to for career advice." },
-  { id: 22, dimension: "network", text: "I make a point to stay visible to the people and spaces that matter for my goals." },
-  { id: 23, dimension: "network", text: "I am intentional about building relationships that support my growth." },
-  { id: 24, dimension: "network", text: "I know how to talk about my strengths in a way that feels natural." },
-  { id: 25, dimension: "network", text: "I use my online presence to reflect the direction I want my career to go." },
+  { id: 21, type: "core", dimension: "network", text: "I have people in my network I could reach out to for career advice." },
+  { id: 22, type: "core", dimension: "network", text: "I make a point to stay visible to the people and spaces that matter for my goals." },
+  { id: 23, type: "core", dimension: "network", text: "I am intentional about building relationships that support my growth." },
+  { id: 24, type: "core", dimension: "network", text: "I know how to talk about my strengths in a way that feels natural." },
+  { id: 25, type: "core", dimension: "network", text: "I use my online presence to reflect the direction I want my career to go." },
+
+  // ── Advanced Questions (26–50) ─────────────────────────
+
+  // Clarity (Advanced)
+  { id: 26, type: "advanced", dimension: "clarity", text: "I can explain my value clearly." },
+  { id: 27, type: "advanced", dimension: "clarity", text: "I know what to strengthen next." },
+  { id: 28, type: "advanced", dimension: "clarity", text: "I make intentional career decisions." },
+  { id: 29, type: "advanced", dimension: "clarity", text: "I can adapt when plans change." },
+  { id: 30, type: "advanced", dimension: "clarity", text: "I know how to position myself for more." },
+
+  // Ownership (Advanced)
+  { id: 31, type: "advanced", dimension: "ownership", text: "I take initiative in my career." },
+  { id: 32, type: "advanced", dimension: "ownership", text: "I follow through on my goals." },
+  { id: 33, type: "advanced", dimension: "ownership", text: "I ask for help when needed." },
+  { id: 34, type: "advanced", dimension: "ownership", text: "I use feedback to improve." },
+  { id: 35, type: "advanced", dimension: "ownership", text: "I stay consistent, even when motivation dips." },
+
+  // Curiosity (Advanced)
+  { id: 36, type: "advanced", dimension: "curiosity", text: "I explore new career possibilities." },
+  { id: 37, type: "advanced", dimension: "curiosity", text: "I seek out useful perspectives." },
+  { id: 38, type: "advanced", dimension: "curiosity", text: "I pay attention to industry trends." },
+  { id: 39, type: "advanced", dimension: "curiosity", text: "I stay open to new experiences." },
+  { id: 40, type: "advanced", dimension: "curiosity", text: "I look for ways to grow my credibility." },
+
+  // Confidence (Advanced)
+  { id: 41, type: "advanced", dimension: "confidence", text: "I speak about my achievements with ease." },
+  { id: 42, type: "advanced", dimension: "confidence", text: "I believe I can grow into new roles." },
+  { id: 43, type: "advanced", dimension: "confidence", text: "I recover quickly from setbacks." },
+  { id: 44, type: "advanced", dimension: "confidence", text: "I trust my ability to handle challenges." },
+  { id: 45, type: "advanced", dimension: "confidence", text: "I can advocate for what I need." },
+
+  // Network & Visibility (Advanced)
+  { id: 46, type: "advanced", dimension: "network", text: "I build new connections with confidence." },
+  { id: 47, type: "advanced", dimension: "network", text: "I stay visible to the right people." },
+  { id: 48, type: "advanced", dimension: "network", text: "I communicate my strengths clearly." },
+  { id: 49, type: "advanced", dimension: "network", text: "I know how to follow up professionally." },
+  { id: 50, type: "advanced", dimension: "network", text: "I use my presence to attract opportunity." },
 ];
+
+// ─── Filtered Question Sets ──────────────────────────────────────────────────
+
+export const coreQuestions = questions.filter((q) => q.type === "core");
+export const advancedQuestions = questions.filter((q) => q.type === "advanced");
 
 // ─── Labels & Weights ─────────────────────────────────────────────────────────
 
@@ -193,14 +240,14 @@ function getArchetype(band: Band, dims: DimensionResult[]): { name: string; desc
   return { name: "Coasting", description: "You're drifting — and your potential is bigger than your current pace. The first step is simply deciding to steer." };
 }
 
-// ─── Main Scoring Function ────────────────────────────────────────────────────
+// ─── Main Scoring Function (Standard — core only) ────────────────────────────
 
 export function calculateResults(answers: Record<number, number>): AssessmentResult {
   const dimensionScores: Record<Dimension, number[]> = {
     clarity: [], ownership: [], curiosity: [], confidence: [], network: [],
   };
 
-  questions.forEach((q) => {
+  coreQuestions.forEach((q) => {
     const val = answers[q.id] ?? 3;
     dimensionScores[q.dimension].push(val);
   });
@@ -239,5 +286,61 @@ export function calculateResults(answers: Record<number, number>): AssessmentRes
     archetypeDescription: description,
     dimensions: dimResults,
     actionPlan: actionPlans[lowestDim],
+    planType: "standard",
+  };
+}
+
+// ─── Advanced Scoring Function (70% core + 30% advanced) ─────────────────────
+
+export function calculateAdvancedResults(
+  coreAnswers: Record<number, number>,
+  advancedAnswerSet: Record<number, number>,
+): AssessmentResult {
+  // Compute per-dimension core scores (0–100)
+  const coreDimScores: Record<Dimension, number> = { clarity: 0, ownership: 0, curiosity: 0, confidence: 0, network: 0 };
+  const advDimScores: Record<Dimension, number> = { clarity: 0, ownership: 0, curiosity: 0, confidence: 0, network: 0 };
+
+  for (const dim of DIMENSION_ORDER) {
+    const coreQs = coreQuestions.filter((q) => q.dimension === dim);
+    const coreSum = coreQs.reduce((acc, q) => acc + (coreAnswers[q.id] ?? 3), 0);
+    coreDimScores[dim] = (coreSum / (coreQs.length * 5)) * 100;
+
+    const advQs = advancedQuestions.filter((q) => q.dimension === dim);
+    const advSum = advQs.reduce((acc, q) => acc + (advancedAnswerSet[q.id] ?? 3), 0);
+    advDimScores[dim] = (advSum / (advQs.length * 5)) * 100;
+  }
+
+  // Blend: Final = (0.7 × Core) + (0.3 × Advanced)
+  const dimResults: DimensionResult[] = DIMENSION_ORDER.map((dim) => {
+    const blended = 0.7 * coreDimScores[dim] + 0.3 * advDimScores[dim];
+    const score = Math.round(blended);
+    const band = getDimensionBand(score);
+    return {
+      dimension: dim,
+      label: dimensionMeta[dim].label,
+      score,
+      band,
+      insight: dimensionInsights[dim][band],
+    };
+  });
+
+  // Weighted overall
+  const totalWeight = Object.values(dimensionMeta).reduce((a, m) => a + m.weight, 0);
+  const weightedSum = dimResults.reduce((a, d) => a + d.score * dimensionMeta[d.dimension].weight, 0);
+  const overallScore = Math.round(weightedSum / totalWeight);
+  const band = getOverallBand(overallScore);
+
+  const { name, description } = getArchetype(band, dimResults);
+  const lowestDim = [...dimResults].sort((a, b) => a.score - b.score)[0].dimension;
+
+  return {
+    overallScore,
+    band,
+    bandLabel: bandLabels[band],
+    archetype: name,
+    archetypeDescription: description,
+    dimensions: dimResults,
+    actionPlan: actionPlans[lowestDim],
+    planType: "advanced",
   };
 }

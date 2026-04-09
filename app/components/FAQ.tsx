@@ -5,46 +5,44 @@ import { Plus, Minus } from "lucide-react";
 
 const faqData = [
   {
-    question: "What exactly do I get in my report?",
-    answer:
-      "You'll receive your 'Readiness Archetype', a detailed breakdown of your 5 dimensions (Clarity, Ownership, Curiosity, Confidence, Network), and a personalized 30-day action plan.",
-    tag: "Results",
-  },
-  {
     question: "How long does the assessment take?",
-    answer:
-      "The assessment is designed to be quick yet deep. It takes approximately 3 minutes to complete 25 targeted behavioral statements.",
-    tag: "Experience",
+    answer: "The core assessment takes 3-5 minutes (25 questions). The premium version with advanced questions takes 7-10 minutes (50 questions). You can save progress and return anytime.",
   },
   {
-    question: "Is my data private and secure?",
-    answer:
-      "Absolutely. We only use your responses to generate your personal career readiness report. We do not sell or share your individual data with third parties.",
-    tag: "Privacy",
+    question: "What kind of questions will I answer?",
+    answer: "You'll rate statements about your career clarity, ownership, curiosity, confidence, and networking using a simple 1-5 scale (Strongly Disagree to Strongly Agree). No right or wrong answers, it's about honest self-reflection.",
   },
   {
-    question: "Can I retake the assessment later?",
-    answer:
-      "Yes! We recommend retaking the assessment every 3–6 months to track your professional growth and see how your dimensions have evolved.",
-    tag: "Access",
+    question: "Is this like a personality test?",
+    answer: "No, this measures your current career readiness and momentum across 5 key dimensions. It shows where you're strong and what to focus on next, rather than 'what career fits your personality.'",
   },
   {
-    question: "Is this only for experienced professionals?",
-    answer:
-      "No! Whether you are a student identifying your first career path or a senior leader looking to pivot, these 5 dimensions are universal indicators of growth potential and readiness.",
-    tag: "Audience",
+    question: "What do I get with each pricing option?",
+    answer: "Basic ($9.99): Full dimension breakdown, results card, personalized recommendations, and PDF report. Premium ($19.99): Advanced questions, results card, personalized recommendations, PDF report, and free eBook.",
   },
   {
-    question: "How are the dimensions calculated?",
-    answer:
-      "Your scores are based on weighted averages of your responses to specific behavioral statements within each category, compared against industry benchmarks for career adaptability.",
-    tag: "Methodology",
+    question: "Are my results private and secure?",
+    answer: "Yes. Your responses and results are stored securely and privately. We never share individual results without your explicit permission. You control what you share on social media.",
   },
   {
-    question: "Do I need to create an account to see results?",
-    answer:
-      "No. We believe in providing immediate value. You can take the assessment and view your initial results instantly without any sign-up required.",
-    tag: "Access",
+    question: "What do Low, Medium, and High readiness mean?",
+    answer: "Low (0-49): Foundation needed — focus on clarity and basic momentum. Medium (50-74): Momentum building — strengthen consistency and visibility. High (75-100): Advancement ready — position for leadership and bigger moves.",
+  },
+  {
+    question: "Can I retake the assessment?",
+    answer: "Yes! Take it every 3-6 months to track your progress. Results are timestamped so you can see how your readiness evolves.",
+  },
+  {
+    question: "What if I don't agree with my results?",
+    answer: "Results reflect your current self-assessment. They're a starting point for reflection, not a final judgment. Use them as a conversation starter with a coach or mentor.",
+  },
+  {
+    question: "Do I need any special preparation?",
+    answer: "No prep needed. Answer honestly based on how you feel right now. The assessment works best when you're reflective rather than overthinking your responses.",
+  },
+  {
+    question: "What happens after I get my results?",
+    answer: "You'll receive your overall readiness score and band, a breakdown by 5 dimensions (Clarity, Ownership, Curiosity, Confidence, Network), and personalized next steps. Premium users also get advanced recommendations and an eBook.",
   },
 ];
 
@@ -117,10 +115,6 @@ export default function FAQ() {
 
                 {/* Tag + toggle */}
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className={`inline-flex text-[9px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-full transition-all duration-200
-                    ${isOpen ? "bg-accent-blue/10 text-accent-blue" : "bg-slate-100 text-slate-400"}`}>
-                    {faq.tag}
-                  </span>
                   <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-300
                     ${isOpen ? "bg-accent-blue text-white" : "text-slate-300 group-hover:bg-slate-100 group-hover:text-slate-400"}`}>
                     {isOpen
@@ -146,6 +140,19 @@ export default function FAQ() {
             </div>
           );
         })}
+      </div>
+
+      {/* Still have questions? */}
+      <div className="mt-16 text-center relative z-10">
+        <p className="text-slate-500 font-medium">
+          Still have questions?{" "}Email{" "}
+          <a
+            href="mailto:careerreadiness10@gmail.com"
+            className="text-accent-blue hover:underline font-semibold transition-all"
+          >
+            careerreadiness10@gmail.com
+          </a>
+        </p>
       </div>
     </section>
   );

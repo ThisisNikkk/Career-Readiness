@@ -4,20 +4,24 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X, ShoppingCart } from "lucide-react";
 import StartAssessmentButton from "./StartAssessmentButton";
+import { useCart } from "../context/CartContext";
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleScrollNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (pathname === "/") {
+  const handleScrollNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setIsMobileMenuOpen(false);
+
+    // Only intercept if it's an anchor link and we are on the home page
+    if (href.startsWith("/#") && pathname === "/") {
       e.preventDefault();
+      const id = href.replace("/#", "");
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMobileMenuOpen(false);
   };
 
   const navLinks = [
@@ -25,7 +29,10 @@ export default function Header() {
     { name: "Why Us", id: "why-us", href: "/#why-us" },
     { name: "About", id: "about", href: "/#about" },
     { name: "FAQ", id: "faq", href: "/#faq" },
+    { name: "Resources", id: "resources", href: "/resources" },
   ];
+
+  const { itemCount } = useCart();
 
   return (
     <header className="w-full h-20 md:h-24 flex items-center justify-between px-6 md:px-16 absolute top-0 left-0 z-50 bg-transparent">
@@ -47,7 +54,7 @@ export default function Header() {
           <a
             key={link.id}
             href={link.href}
-            onClick={(e) => handleScrollNav(e, link.id)}
+            onClick={(e) => handleScrollNav(e, link.href)}
             className="text-md font-medium text-black-700 hover:text-accent-blue transition-colors cursor-pointer"
           >
             {link.name}
@@ -64,6 +71,19 @@ export default function Header() {
 
       {/* Desktop CTA & Mobile Toggle */}
       <div className="flex items-center gap-4 z-50">
+        {/* Cart Icon */}
+        <Link
+          href="/cart"
+          className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-100 text-slate-600 hover:text-accent-blue hover:border-accent-blue/30 transition-all shadow-sm"
+        >
+          <ShoppingCart className="w-5 h-5" />
+          {itemCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white animate-in zoom-in duration-300">
+              {itemCount}
+            </span>
+          )}
+        </Link>
+
         <div className="hidden sm:block">
           <StartAssessmentButton className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-blue to-secondary hover:from-secondary hover:to-accent-blue text-white rounded-full pl-6 pr-2 py-2 transition-all duration-300 group shadow-lg hover:shadow-accent-blue/20">
             <span className="text-sm font-medium tracking-wide ml-1 uppercase">Start Now</span>
@@ -88,7 +108,7 @@ export default function Header() {
               <a
                 key={link.id}
                 href={link.href}
-                onClick={(e) => handleScrollNav(e, link.id)}
+                onClick={(e) => handleScrollNav(e, link.href)}
                 className="text-lg font-bold text-primary hover:text-accent-blue transition-colors cursor-pointer"
               >
                 {link.name}

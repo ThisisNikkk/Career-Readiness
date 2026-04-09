@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Zap, BookOpen, ArrowRight, ShieldCheck, Star, X, Info } from "lucide-react";
+import { CheckCircle2, Zap, ArrowRight, ShieldCheck, Star } from "lucide-react";
 
 interface PlanProps {
   title: string;
@@ -70,15 +70,19 @@ function PlanCard({ title, price, description, features, isHighlighted, buttonTe
 
 export default function SubscriptionScreen() {
   const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
 
   const handleStandard = () => {
-    // In a real app, this would trigger Stripe or similar
+    if (typeof window !== "undefined") {
+      localStorage.setItem("career_assessment_plan", "standard");
+    }
     router.push("/result");
   };
 
   const handleAdvanced = () => {
-    setShowModal(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("career_assessment_plan", "advanced");
+    }
+    router.push("/assessment?plan=advanced");
   };
 
   return (
@@ -127,7 +131,7 @@ export default function SubscriptionScreen() {
             description="For those committed to elite performance. Deep dive into your potential."
             features={[
               "Everything in Standard",
-              "15 Advanced Readiness Questions",
+              "25 Advanced Readiness Questions",
               "Strategic Growth Roadmap",
               "FREE 'Career Catalyst' Ebook",
               "Priority Support"
@@ -138,55 +142,6 @@ export default function SubscriptionScreen() {
           />
         </div>
       </div>
-
-      {/* Advanced Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div
-            className="w-full max-w-md bg-white rounded-[32px] p-8 shadow-2xl border border-slate-100 relative animate-in zoom-in-95 slide-in-from-bottom-4 duration-500 ease-out"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-8">
-              <Info className="w-8 h-8" />
-            </div>
-
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight leading-none mb-4">
-              Coming Very Soon
-            </h2>
-
-            <div className="space-y-4">
-              <p className="text-slate-500 font-medium leading-relaxed">
-                Advanced Career Readiness Assessment with <span className="text-blue-600 font-bold">15 additional questions</span> is launching very soon!
-              </p>
-
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex items-start gap-4">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
-                  <BookOpen className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Exclusive Bonus</div>
-                  <div className="text-slate-900 font-bold">Free 'Career Catalyst' Ebook</div>
-                  <div className="text-xs text-slate-500 mt-1">Included with every Advanced plan purchase.</div>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowModal(false)}
-              className="w-full mt-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-slate-900/10"
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
 
       <style dangerouslySetInnerHTML={{
         __html: `
